@@ -21,45 +21,6 @@ TestCase subclass: #CustomerBookTest
 	poolDictionaries: ''
 	category: 'CodigoRepetido-Ejercicio'!
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 18:31:34'!
-do: anAction inLessThan: aTimeThresholdInMiliseconds
-
-	| millisecondsBeforeRunning millisecondsAfterRunning | 
-		
-	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
-       anAction value.
-	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
-	
-	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < aTimeThresholdInMiliseconds! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 18:29:30'!
-newCustomerBookWith: aCustomer
-
-	| customerBook |
-	
-	customerBook := CustomerBook new.
-	customerBook addCustomerNamed: aCustomer.
-	
-	^ customerBook.! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:41:34'!
-on: customerBook checkExpectedNumberOfCustomersWith: aNumberOfCustomersSuspended
-
-	self assert: 0 equals: customerBook numberOfActiveCustomers.
-	self assert: aNumberOfCustomersSuspended equals: customerBook numberOfSuspendedCustomers.
-	self assert: aNumberOfCustomersSuspended equals: customerBook numberOfCustomers.
-! !
-
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:28:57'!
-on: customerBook try: anAction withExpected: error
-
-	[ anAction value.
-	self fail ]
-		on: error 
-		do: [ :anError | 
-			self assert: customerBook numberOfCustomers = 1.
-			self assert: (customerBook includesCustomerNamed: 'John Lennon') ]! !
-
 !CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 18:35:47'!
 test01AddingCustomerShouldNotTakeMoreThan50Milliseconds
 	| customerBook |
@@ -79,9 +40,8 @@ test02RemovingCustomerShouldNotTakeMoreThan100Milliseconds
 	self do: [ customerBook removeCustomerNamed: paulMcCartney ] inLessThan: 100*millisecond.
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'HernanWilkinson 5/9/2012 18:12'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:51:50'!
 test03CanNotAddACustomerWithEmptyName 
-
 	| customerBook |
 			
 	customerBook := CustomerBook new.
@@ -93,18 +53,17 @@ test03CanNotAddACustomerWithEmptyName
 			self assert: anError messageText = CustomerBook customerCanNotBeEmptyErrorMessage.
 			self assert: customerBook isEmpty ]! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:31:51'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:38:18'!
 test04CanNotRemoveAnInvalidCustomer
-	| customerBook johnLennon |
+	| customerBook |
 			
-	johnLennon := 'John Lennon'.
-	customerBook := self newCustomerBookWith: johnLennon.
+	customerBook := self newCustomerBookWith: 'John Lennon'.
 	
 	self  on: customerBook 
-		try: [customerBook removeCustomerNamed: 'Paul McCartney']  
-		withExpected: NotFound.! !
+		tryToDo: [customerBook removeCustomerNamed: 'Paul McCartney']  
+		andExpectError: NotFound.! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:42:11'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:51:00'!
 test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	| customerBook paulMcCartney|
 	
@@ -113,14 +72,14 @@ test05SuspendingACustomerShouldNotRemoveItFromCustomerBook
 	
 	customerBook suspendCustomerNamed: paulMcCartney.
 	
-	self on: customerBook checkExpectedNumberOfCustomersWith: 1. 
+	self on: customerBook withNoActiveCustomersCheckSuspendedCustomersEquals: 1. 
 	self assert: (customerBook includesCustomerNamed: paulMcCartney).
 	
 
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:41:51'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:51:00'!
 test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	| customerBook paulMcCartney|
 	
@@ -130,25 +89,24 @@ test06RemovingASuspendedCustomerShouldRemoveItFromCustomerBook
 	customerBook suspendCustomerNamed: paulMcCartney.
 	customerBook removeCustomerNamed: paulMcCartney.
 	
-	self on: customerBook checkExpectedNumberOfCustomersWith: 0.
+	self on: customerBook withNoActiveCustomersCheckSuspendedCustomersEquals: 0.
 	self deny: (customerBook includesCustomerNamed: paulMcCartney).
 
 
 	
 ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:30:15'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:38:23'!
 test07CanNotSuspendAnInvalidCustomer	
-	| customerBook johnLennon |
+	| customerBook |
 			
-	johnLennon := 'John Lennon'.
-	customerBook := self newCustomerBookWith: johnLennon.
+	customerBook := self newCustomerBookWith: 'John Lennon'.
 	
 	self  on: customerBook 
-		try: [customerBook suspendCustomerNamed: 'George Harrison'] 
-		withExpected: CantSuspend. ! !
+		tryToDo: [customerBook suspendCustomerNamed: 'George Harrison'] 
+		andExpectError: CantSuspend. ! !
 
-!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/13/2021 23:30:59'!
+!CustomerBookTest methodsFor: 'testing' stamp: 'ENC 4/14/2021 23:38:28'!
 test08CanNotSuspendAnAlreadySuspendedCustomer
 	| customerBook johnLennon |
 			
@@ -158,8 +116,48 @@ test08CanNotSuspendAnAlreadySuspendedCustomer
 	customerBook suspendCustomerNamed: johnLennon.
 	
 	self  on: customerBook 
-		try: [customerBook suspendCustomerNamed: johnLennon] 
-		withExpected: CantSuspend.
+		tryToDo: [customerBook suspendCustomerNamed: johnLennon] 
+		andExpectError: CantSuspend.
+! !
+
+
+!CustomerBookTest methodsFor: 'removeRepeatedCode' stamp: 'ENC 4/13/2021 18:31:34'!
+do: anAction inLessThan: aTimeThresholdInMiliseconds
+
+	| millisecondsBeforeRunning millisecondsAfterRunning | 
+		
+	millisecondsBeforeRunning := Time millisecondClockValue * millisecond.
+       anAction value.
+	millisecondsAfterRunning := Time millisecondClockValue * millisecond.
+	
+	self assert: (millisecondsAfterRunning-millisecondsBeforeRunning) < aTimeThresholdInMiliseconds! !
+
+!CustomerBookTest methodsFor: 'removeRepeatedCode' stamp: 'ENC 4/13/2021 18:29:30'!
+newCustomerBookWith: aCustomer
+
+	| customerBook |
+	
+	customerBook := CustomerBook new.
+	customerBook addCustomerNamed: aCustomer.
+	
+	^ customerBook.! !
+
+!CustomerBookTest methodsFor: 'removeRepeatedCode' stamp: 'ENC 4/14/2021 23:38:04'!
+on: customerBook tryToDo: anAction andExpectError: error
+
+	[ anAction value.
+	self fail ]
+		on: error 
+		do: [ :anError | 
+			self assert: customerBook numberOfCustomers = 1.
+			self assert: (customerBook includesCustomerNamed: 'John Lennon') ]! !
+
+!CustomerBookTest methodsFor: 'removeRepeatedCode' stamp: 'ENC 4/14/2021 23:51:39'!
+on: customerBook withNoActiveCustomersCheckSuspendedCustomersEquals: aNumberOfSuspendedCustomers
+
+	self assert: 0 equals: customerBook numberOfActiveCustomers.
+	self assert: aNumberOfSuspendedCustomers equals: customerBook numberOfSuspendedCustomers.
+	self assert: aNumberOfSuspendedCustomers equals: customerBook numberOfCustomers.
 ! !
 
 
@@ -211,28 +209,18 @@ numberOfSuspendedCustomers
 	
 	^suspended size! !
 
-!CustomerBook methodsFor: 'customer management' stamp: 'ENC 4/14/2021 00:00:02'!
-removeCustomer: aName from: aGroupOfCustomers
-	
-	1 to: aGroupOfCustomers size do: 
-	[ :index |
-		aName = (aGroupOfCustomers at: index)
-			ifTrue: [
-				aGroupOfCustomers removeAt: index.
-				^ aName 
-			] 
-	]! !
-
-!CustomerBook methodsFor: 'customer management' stamp: 'ENC 4/14/2021 00:03:50'!
+!CustomerBook methodsFor: 'customer management' stamp: 'ENC 4/14/2021 23:54:32'!
 removeCustomerNamed: aName 
  
-	(self includesCustomerNamed: aName) 
-		ifTrue: [
-			self removeCustomer: aName from: active. 
-			self removeCustomer: aName from: suspended.
-		] 
-		ifFalse: [ ^ NotFound signal ]
-! !
+	(self includesCustomerNamed: aName) ifFalse: [ ^ NotFound signal ].
+	
+	self removeIfFoundCustomerNamed: aName from: active. 
+	self removeIfFoundCustomerNamed: aName from: suspended.! !
+
+!CustomerBook methodsFor: 'customer management' stamp: 'ENC 4/14/2021 23:54:32'!
+removeIfFoundCustomerNamed: aName from: aGroupOfCustomers
+	
+	(aGroupOfCustomers includes: aName) ifTrue: [ aGroupOfCustomers remove: aName ]! !
 
 !CustomerBook methodsFor: 'customer management' stamp: 'HernanWilkinson 7/6/2011 17:52'!
 signalCustomerAlreadyExists 
