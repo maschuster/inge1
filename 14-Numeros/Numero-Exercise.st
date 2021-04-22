@@ -266,10 +266,8 @@ test42SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 	self assert: oneHalf negated equals: (one / negativeTwo)! !
 
 
-!NumeroTest methodsFor: 'setup' stamp: 'MS 4/21/2021 23:05:24'!
+!NumeroTest methodsFor: 'setup' stamp: 'MS 4/21/2021 23:42:58'!
 setUp
-	|cero|
-	cero := Entero with: 2.
 	zero := Entero with: 0.
 	one := Entero with: 1.
 	two := Entero with: 2.
