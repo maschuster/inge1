@@ -266,9 +266,8 @@ test42SignIsCorrectlyAssignedToFractionWithNegativeDivisor
 	self assert: oneHalf negated equals: (one / negativeTwo)! !
 
 
-!NumeroTest methodsFor: 'setup' stamp: 'ENC 4/18/2021 23:36:52'!
+!NumeroTest methodsFor: 'setup' stamp: 'MS 4/21/2021 23:42:58'!
 setUp
-
 	zero := Entero with: 0.
 	one := Entero with: 1.
 	two := Entero with: 2.
@@ -314,10 +313,34 @@ Object subclass: #Numero
 
 	self subclassResponsibility ! !
 
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:32:12'!
+addFraction: aFractionAdder
+	self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:31:49'!
+addInteger: anIntegerAdder
+	self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:32:50'!
+divideAFraction: aFractionalDividend
+	self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:33:05'!
+divideAnInteger: anIntegerDividend
+	self subclassResponsibility ! !
+
 !Numero methodsFor: 'arithmetic operations' stamp: 'HernanWilkinson 5/7/2016 22:48'!
 invalidNumberType
 
 	self error: self class invalidNumberTypeErrorDescription! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:33:43'!
+multiplyByFraction: aFractionalMultiplier
+	self subclassResponsibility ! !
+
+!Numero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:34:02'!
+multiplyByInteger: anIntegerMultiplier
+	self subclassResponsibility ! !
 
 !Numero methodsFor: 'arithmetic operations' stamp: 'NR 9/23/2018 23:37:13'!
 negated
@@ -446,11 +469,6 @@ hash
 	^value hash! !
 
 
-!Entero methodsFor: 'initialization' stamp: 'HernanWilkinson 5/7/2016 20:09'!
-initalizeWith: aValue 
-	
-	value := aValue! !
-
 
 !Entero methodsFor: 'value' stamp: 'HernanWilkinson 5/7/2016 21:02'!
 integerValue
@@ -487,21 +505,23 @@ isZero
 Entero class
 	instanceVariableNames: ''!
 
-!Entero class methodsFor: 'instance creation' stamp: 'NR 4/15/2021 16:42:24'!
+!Entero class methodsFor: 'error descriptions' stamp: 'NR 4/15/2021 16:42:24'!
 negativeFibonacciErrorDescription
 	^ ' Fibonacci no está definido aquí para Enteros Negativos!!!!!!'! !
 
-!Entero class methodsFor: 'instance creation' stamp: 'ENC 4/19/2021 20:55:06'!
+
+!Entero class methodsFor: 'instance creation' stamp: 'MS 4/21/2021 23:40:00'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
 	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
 	
-	(aValue = 0) ifTrue: [^ Cero with: aValue].
-	(aValue = 1) ifTrue: [^ Uno with: aValue].
+	(aValue = 0) ifTrue: [^ Cero create].
+	(aValue = 1) ifTrue: [^ Uno create].
 	(aValue < 0) ifTrue: [^ Negativo with: aValue].
+	(aValue > 0) ifTrue: [^ MayorQueUno with: aValue].
 		
-	^MayorQueUno with: aValue! !
+	^self error: 'aValue debe ser válido'! !
 
 
 !classDefinition: #Cero category: 'Numero-Exercise'!
@@ -511,15 +531,20 @@ Entero subclass: #Cero
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Cero methodsFor: 'as yet unclassified' stamp: 'ENC 4/20/2021 23:46:03'!
-fibonacci
-
-	^ Uno with: 1.! !
-
-!Cero methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:38:33'!
+!Cero methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:38:33'!
 generateAFractionWith: aNumerator
 
 	^ self error: self class canNotDivideByZeroErrorDescription.! !
+
+!Cero methodsFor: 'initialization' stamp: 'MS 4/21/2021 22:59:47'!
+initalizeZero
+	value := 0! !
+
+
+!Cero methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:37:33'!
+fibonacci
+
+	^ Uno create! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -527,33 +552,31 @@ generateAFractionWith: aNumerator
 Cero class
 	instanceVariableNames: ''!
 
-!Cero class methodsFor: 'as yet unclassified' stamp: 'ENC 4/19/2021 20:49:47'!
-with: aValue 
-	
-	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
-	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
-		
-	^self new initalizeWith: aValue.! !
+!Cero class methodsFor: 'instance creation' stamp: 'MS 4/21/2021 23:35:55'!
+create
+	^Cero new initalizeZero! !
 
 
-!classDefinition: #MayorQueUno category: 'Numero-Exercise'!
-Entero subclass: #MayorQueUno
+!classDefinition: #NegativoOMayorQueUno category: 'Numero-Exercise'!
+Entero subclass: #NegativoOMayorQueUno
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!MayorQueUno methodsFor: 'as yet unclassified' stamp: 'ENC 4/20/2021 23:45:25'!
-fibonacci
+!NegativoOMayorQueUno methodsFor: 'initialization' stamp: 'MS 4/21/2021 23:17:11'!
+initalizeWith: aValue
+	value := aValue! !
 
-	| one two |
+
+!classDefinition: #MayorQueUno category: 'Numero-Exercise'!
+NegativoOMayorQueUno subclass: #MayorQueUno
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Numero-Exercise'!
 
-	one := Uno with: 1.
-	two := self class with: 2.
-	
-	^ (self - one) fibonacci + (self - two) fibonacci! !
-
-!MayorQueUno methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:38:21'!
+!MayorQueUno methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:38:21'!
 generateAFractionWith: aNumerator
 	| denominator greatestCommonDivisor numerator |
 	
@@ -563,11 +586,22 @@ generateAFractionWith: aNumerator
 	
 	^ denominator generateReducedFractionWith: numerator.! !
 
-!MayorQueUno methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:36:08'!
+!MayorQueUno methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:36:08'!
 generateReducedFractionWith: aNumerator
 
 	^ Fraccion new initializeWith: aNumerator over: self.
 	! !
+
+
+!MayorQueUno methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:38:11'!
+fibonacci
+
+	| one two |
+
+	one := Uno create.
+	two := self class with: 2.
+	
+	^ (self - one) fibonacci + (self - two) fibonacci! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -575,7 +609,7 @@ generateReducedFractionWith: aNumerator
 MayorQueUno class
 	instanceVariableNames: ''!
 
-!MayorQueUno class methodsFor: 'as yet unclassified' stamp: 'ENC 4/19/2021 20:50:00'!
+!MayorQueUno class methodsFor: 'instance creation' stamp: 'ENC 4/19/2021 20:50:00'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
@@ -585,21 +619,22 @@ with: aValue
 
 
 !classDefinition: #Negativo category: 'Numero-Exercise'!
-Entero subclass: #Negativo
+NegativoOMayorQueUno subclass: #Negativo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Negativo methodsFor: 'as yet unclassified' stamp: 'ENC 4/18/2021 18:03:12'!
-fibonacci
-
-	^ self error: Negativo negativeFibonacciErrorDescription. ! !
-
-!Negativo methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:38:07'!
+!Negativo methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:38:07'!
 generateAFractionWith: aNumerator
 
 	^ aNumerator negated / self negated.! !
+
+
+!Negativo methodsFor: 'arithmetic operations' stamp: 'ENC 4/18/2021 18:03:12'!
+fibonacci
+
+	^ self error: Negativo negativeFibonacciErrorDescription. ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -607,7 +642,7 @@ generateAFractionWith: aNumerator
 Negativo class
 	instanceVariableNames: ''!
 
-!Negativo class methodsFor: 'as yet unclassified' stamp: 'ENC 4/19/2021 20:50:04'!
+!Negativo class methodsFor: 'instance creation' stamp: 'ENC 4/19/2021 20:50:04'!
 with: aValue 
 	
 	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
@@ -623,21 +658,26 @@ Entero subclass: #Uno
 	poolDictionaries: ''
 	category: 'Numero-Exercise'!
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'ENC 4/20/2021 23:44:58'!
+!Uno methodsFor: 'arithmetic operations' stamp: 'MS 4/21/2021 23:37:42'!
 fibonacci
 
-	^ self class with: 1.! !
+	^ self class create! !
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:37:46'!
+
+!Uno methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:37:46'!
 generateAFractionWith: aNumerator
 
 	^ aNumerator.! !
 
-!Uno methodsFor: 'as yet unclassified' stamp: 'ENC 4/21/2021 00:33:00'!
+!Uno methodsFor: 'initialization' stamp: 'ENC 4/21/2021 00:33:00'!
 generateReducedFractionWith: aNumerator
 	
 	^ aNumerator.
 	! !
+
+!Uno methodsFor: 'initialization' stamp: 'MS 4/21/2021 22:59:15'!
+initalizeOne
+	value := 1! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -645,13 +685,9 @@ generateReducedFractionWith: aNumerator
 Uno class
 	instanceVariableNames: ''!
 
-!Uno class methodsFor: 'as yet unclassified' stamp: 'ENC 4/19/2021 20:50:08'!
-with: aValue 
-	
-	"Esta verificacion esta puesta por si se equivocan y quieren crear un Entero pasando otra cosa que un Integer - Hernan"
-	aValue isInteger ifFalse: [  self error: 'aValue debe ser anInteger' ].
-		
-	^self new initalizeWith: aValue.! !
+!Uno class methodsFor: 'instance creation' stamp: 'MS 4/21/2021 23:35:27'!
+create
+	^Uno new initalizeOne! !
 
 
 !classDefinition: #Fraccion category: 'Numero-Exercise'!
