@@ -139,85 +139,94 @@ test10CanNotTopWhenThereAreNoObjectsInTheStack
 
 !classDefinition: #SentenceFinderByPrefixTest category: 'Stack-Exercise'!
 TestCase subclass: #SentenceFinderByPrefixTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'emptyStack emptySentenceFinder sentenceFinder sentenceFinderStack'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 21:57:51'!
-test01EmptyStack
+!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ENC 4/27/2021 22:45:14'!
+assert: aStack isEssentiallyEqualTo: anotherStack
 
-	| stack prefix sentenceFinder |
+	self assert: (aStack size = anotherStack size).	
+
+	(aStack size) timesRepeat: [
+		self assert: (aStack pop = anotherStack pop).
+	].! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ENC 4/27/2021 22:52:13'!
+generateTestStack
+
+	| newStack |
 	
-	stack := OOStack new.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	newStack := OOStack new.
+	newStack push: 'something'.
+	newStack push: 'elsewhere'.
+	newStack push: 'else'.
+	newStack push: 'winter'.
+	newStack push: 'is not winter'.	
+	
+	^ newStack! !
+
+
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 22:46:57'!
+setUp
+
+	emptyStack := OOStack new.
+	sentenceFinderStack := self generateTestStack.
+		
+	emptySentenceFinder := SentenceFinderByPrefix with: emptyStack.
+	sentenceFinder := SentenceFinderByPrefix with: sentenceFinderStack.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 22:53:13'!
+test01NoMatchesInEmptyStackSentenceFinder
+
+	| prefix |
+	
+	prefix := 'pepe'.
+	
+	self assert: ((emptySentenceFinder find: prefix) = OrderedCollection new).
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 22:53:31'!
+test02NoMatchesInNotEmptySentenceFinder
+
+	| prefix |
 	
 	prefix := 'pepe'.
 	
 	self assert: ((sentenceFinder find: prefix) = OrderedCollection new).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 21:58:27'!
-test02NoCoincidences
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:04:06'!
+test03OnePrefixMatchInNotEmptySentenceFinder
 
-	| stack prefix sentenceFinder |
-	
-	stack := OOStack new.
-	stack push: 'something'.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
-	
-	prefix := 'pepe'.
-	
-	self assert: ((sentenceFinder find: prefix) = OrderedCollection new).
-	! !
-
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 21:58:35'!
-test03UniquePrefixCoincidence
-
-	| stack prefix result coincidence sentenceFinder |
-	
-	stack := OOStack new.
-	
-	coincidence := 'something'.
-	stack push: coincidence.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	| prefix result |
 	
 	prefix := 'some'.
 	
 	result := OrderedCollection new.
-	result add: coincidence.
+	result add: 'something'.
 	
 	self assert: ((sentenceFinder find: prefix) = result).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 21:58:40'!
-test04UniqueFullWordCoincidence
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:04:15'!
+test04OneFullMatchInNotEmptySentenceFinder
 
-	| stack prefix result coincidence sentenceFinder |
-	
-	stack := OOStack new.
-	
-	coincidence := 'something'.
-	stack push: coincidence.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	| prefix result |
 	
 	prefix := 'something'.
 	
 	result := OrderedCollection new.
-	result add: coincidence.
+	result add: 'something'.
 	
 	self assert: ((sentenceFinder find: prefix) = result).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 22:00:06'!
-test05NoCoincidenceCaseSensitivePrefix
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:05:12'!
+test05NoMatchCaseSensitivePrefix
 
-	| stack prefix result sentenceFinder |
-	
-	stack := OOStack new.
-	
-	stack push: 'something'.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	| prefix result |
 	
 	prefix := 'Something'.
 	
@@ -226,17 +235,14 @@ test05NoCoincidenceCaseSensitivePrefix
 	self assert: ((sentenceFinder find: prefix) = result).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 22:49:44'!
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 22:30:38'!
 test06CanNotFindEmptyPrefix
 
-	| stack prefix sentenceFinder |
-	
-	stack := OOStack new.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	| prefix |
 	
 	prefix := ''.
 
-		self
+	self
 		should: [ sentenceFinder find: prefix]
 		raise: Error
 		withExceptionDo: [ :anError |
@@ -244,17 +250,14 @@ test06CanNotFindEmptyPrefix
 
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 22:49:55'!
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 22:30:43'!
 test07CanNotFindPrefixWithSpaces
 
-	| stack prefix sentenceFinder |
-	
-	stack := OOStack new.
-	sentenceFinder := SentenceFinderByPrefix with: stack.
+	| prefix |
 	
 	prefix := 'some thing'.
 
-		self
+	self
 		should: [ sentenceFinder find: prefix]
 		raise: Error 
 		withExceptionDo: [ :anError |
@@ -262,104 +265,60 @@ test07CanNotFindPrefixWithSpaces
 
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 22:47:53'!
-test08MultipleCoincidences
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:05:43'!
+test08MultiplesMatchesInNotEmptySentenceFinder
 
-	| stack prefix result coincidence1 coincidence2 sentenceFinder |
+	| prefix result |
 	
-	stack := OOStack new.
-	
-	coincidence1 := 'something'.
-	coincidence2 := 'somewhere'.
-	
-	stack push: 'me gustan lo jueguito'.
-	stack push: coincidence1.
-	stack push: 'casa'.
-	stack push: coincidence2.
-	
-	sentenceFinder := SentenceFinderByPrefix with: stack.
-	
-	prefix := 'some'.
+	prefix := 'else'.
 	
 	result := OrderedCollection new.
-	result add: coincidence2.
-	result add: coincidence1.
+	result add: 'else'.
+	result add: 'elsewhere'.
 	
 	self assert: ((sentenceFinder find: prefix) = result).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 21:59:03'!
-test09CoincidenceInMiddleOfSentenceNotFound
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:06:42'!
+test09NoMatchMiddleOfSentenceSubstring
 
-	| stack prefix result coincidence sentenceFinder |
+	| prefix result |
 	
-	stack := OOStack new.
-	
-	coincidence := 'something'.
-	
-	stack push: 'me gustan lo jueguito'.
-	stack push: coincidence.
-	stack push: 'casa'.
-	stack push: 'he is somewhere'.
-	
-	sentenceFinder := SentenceFinderByPrefix with: stack.
-	
-	prefix := 'some'.
+	prefix := 'wint'.
 	
 	result := OrderedCollection new.
-	result add: coincidence.
+	result add: 'winter'.
 	
 	self assert: ((sentenceFinder find: prefix) = result).
 	! !
 
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 23:03:37'!
-test10checkStackIntegrityWithCoincidence
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:07:18'!
+test10CheckStackIntegrityWithMatches
 
-	| stack prefix coincidence originalStack sentenceFinder |
+	|  prefix anStack originalStack testSentenceFinder |
 	
-	stack := OOStack new.
-	
-	coincidence := 'something'.
-	
-	stack push: 'me gustan lo jueguito'.
-	stack push: coincidence.
-	stack push: 'casa'.
-	stack push: 'he is somewhere'.
-	
-	originalStack := stack copy .
-	
-	sentenceFinder := SentenceFinderByPrefix with: stack.
-	
-	stack pop.
-		
-	prefix := 'some'.
-	sentenceFinder find: prefix.
-		
-	self assert: (originalStack = stack).
-	! !
-
-!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'MS 4/26/2021 23:05:51'!
-test11checkStackIntegrityWithNoCoincidences
-
-	| stack prefix originalStack sentenceFinder |
-	
-	stack := OOStack new.
-	
-	stack push: 'me gustan lo jueguito'.
-	stack push: 'pepe'.
-	stack push: 'casa'.
-	stack push: 'he is somewhere'.
-	
-	originalStack := stack copy .
-
-	sentenceFinder := SentenceFinderByPrefix with: stack.
-
-	stack pop.
+	originalStack := self generateTestStack.
+	anStack := self generateTestStack.
+	testSentenceFinder := SentenceFinderByPrefix with: anStack.
 	
 	prefix := 'some'.
-	sentenceFinder find: prefix.
+	testSentenceFinder find: prefix.
 		
-	self assert: (originalStack = stack).
+	self assert: originalStack isEssentiallyEqualTo: anStack.! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing' stamp: 'ENC 4/27/2021 23:07:38'!
+test11CheckStackIntegrityWithNoMatches
+
+	|  prefix anStack originalStack testSentenceFinder |
+	
+	originalStack := self generateTestStack.
+	anStack := self generateTestStack.
+	testSentenceFinder := SentenceFinderByPrefix with: anStack.
+	
+	prefix := 'pepe'.
+	testSentenceFinder find: prefix.
+		
+	self assert: originalStack isEssentiallyEqualTo: anStack.
 	! !
 
 
@@ -377,19 +336,16 @@ initializeNew
 	memory addFirst: Base new.! !
 
 
-
-!OOStack methodsFor: 'operations' stamp: 'ENC 4/25/2021 13:19:02'!
+!OOStack methodsFor: 'operations' stamp: 'ENC 4/27/2021 23:09:42'!
 isEmpty
-
-	"
-		Tenemos dos opciones. O verificamos que el elemento de la pila sea la Base o vemos que size = 1. ¿Qué nos gusta más?
-	"
 
 	^ memory first isKindOf: Base.! !
 
-!OOStack methodsFor: 'operations' stamp: 'MS 4/26/2021 17:36:11'!
+!OOStack methodsFor: 'operations' stamp: 'ENC 4/27/2021 23:09:48'!
 pop
+
 	|top|
+
 	top := self top.
 	memory removeFirst	.
 	
@@ -409,7 +365,6 @@ size
 top
 
 	^ memory first content.! !
-
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -436,15 +391,17 @@ Object subclass: #SentenceFinderByPrefix
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefix methodsFor: 'initialization' stamp: 'MS 4/26/2021 21:21:08'!
+!SentenceFinderByPrefix methodsFor: 'initialization' stamp: 'ENC 4/27/2021 23:08:29'!
 initializeWith: aStack
+
 	stack := aStack
 	
 	! !
 
 
-!SentenceFinderByPrefix methodsFor: 'operations' stamp: 'MS 4/26/2021 22:49:28'!
+!SentenceFinderByPrefix methodsFor: 'operations' stamp: 'ENC 4/27/2021 23:08:34'!
 find: aPrefix
+
 	| result auxStack |
 	
 	(aPrefix = '') ifTrue: [^ self error: self class emptyPrefixErrorDescription ].
@@ -471,18 +428,21 @@ find: aPrefix
 SentenceFinderByPrefix class
 	instanceVariableNames: ''!
 
-!SentenceFinderByPrefix class methodsFor: 'error' stamp: 'MS 4/26/2021 18:21:02'!
+!SentenceFinderByPrefix class methodsFor: 'error descriptions' stamp: 'ENC 4/27/2021 23:08:23'!
 emptyPrefixErrorDescription
+
 	^ 'Prefix cannot be empty'! !
 
-!SentenceFinderByPrefix class methodsFor: 'error' stamp: 'MS 4/26/2021 18:20:54'!
+!SentenceFinderByPrefix class methodsFor: 'error descriptions' stamp: 'ENC 4/27/2021 23:08:20'!
 spacePrefixErrorDescription
+
 	^ 'Prefix cannot have spaces'! !
 
 
-!SentenceFinderByPrefix class methodsFor: 'instance creation' stamp: 'MS 4/26/2021 21:19:08'!
+!SentenceFinderByPrefix class methodsFor: 'instance creation' stamp: 'ENC 4/27/2021 23:08:12'!
 with: aStack
-	^self new initializeWith: aStack! !
+
+	^ self new initializeWith: aStack.! !
 
 
 !classDefinition: #StackSlot category: 'Stack-Exercise'!
@@ -535,7 +495,7 @@ content
 RegularSlot class
 	instanceVariableNames: ''!
 
-!RegularSlot class methodsFor: 'as yet unclassified' stamp: 'ENC 4/25/2021 13:07:52'!
+!RegularSlot class methodsFor: 'instance creation' stamp: 'ENC 4/25/2021 13:07:52'!
 with: aContent
 
 	^ self new initializeWith: aContent.! !
