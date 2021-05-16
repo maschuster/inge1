@@ -144,14 +144,23 @@ TestCase subclass: #SentenceFinderByPrefixTest
 	poolDictionaries: ''
 	category: 'Stack-Exercise'!
 
-!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ENC 4/27/2021 22:45:14'!
-assert: aStack isEssentiallyEqualTo: anotherStack
-
-	self assert: (aStack size = anotherStack size).	
+!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'MS 4/29/2021 15:12:50'!
+assert: aStack containsSameElementsThan: anotherStack
 
 	(aStack size) timesRepeat: [
 		self assert: (aStack pop = anotherStack pop).
 	].! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'MS 4/29/2021 15:12:28'!
+assert: aStack hasTheSameSizeThan: anotherStack
+
+	self assert: (aStack size = anotherStack size).	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'MS 4/29/2021 15:17:38'!
+assert: aStack isEssentiallyEqualTo: anotherStack
+
+	self assert: aStack hasTheSameSizeThan: anotherStack.
+	self assert: aStack containsSameElementsThan: anotherStack.! !
 
 !SentenceFinderByPrefixTest methodsFor: 'testing - private' stamp: 'ENC 4/27/2021 22:52:13'!
 generateTestStack
@@ -399,20 +408,20 @@ initializeWith: aStack
 	! !
 
 
-!SentenceFinderByPrefix methodsFor: 'operations' stamp: 'ENC 4/27/2021 23:08:34'!
+!SentenceFinderByPrefix methodsFor: 'operations' stamp: 'MS 4/29/2021 15:07:25'!
 find: aPrefix
 
-	| result auxStack |
+	| coincidences auxStack |
 	
 	(aPrefix = '') ifTrue: [^ self error: self class emptyPrefixErrorDescription ].
 	(aPrefix includesSubString: ' ') ifTrue: [^ self error: self class spacePrefixErrorDescription ].
 		
-	result := OrderedCollection new.
+	coincidences := OrderedCollection new.
 	auxStack := OOStack new.
 		
 	(stack size) timesRepeat: [ | sentence |
 		sentence := stack pop.
-		(sentence beginsWith: aPrefix) ifTrue: [result add: sentence].
+		(sentence beginsWith: aPrefix) ifTrue: [coincidences add: sentence].
 		auxStack push: sentence.
 		].
 	
@@ -420,7 +429,7 @@ find: aPrefix
 		stack push: (auxStack pop)
 		].
 	
-	^result! !
+	^coincidences! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
