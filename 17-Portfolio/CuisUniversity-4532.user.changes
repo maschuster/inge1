@@ -2105,3 +2105,2227 @@ hasAssociated: anYYY
 	^ self = anYYY ! !
 
 ----QUIT----(21 May 2021 10:25:44) CuisUniversity-4532.image priorSource: 18241899!
+
+----End fileIn of C:\Users\Martín\Desktop\Portfolio-Ejercicio.st----!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:13:45'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:13:45'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:13:45'!
+FAILURE!
+
+Object subclass: #Portfolio
+	instanceVariableNames: 'financial assets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:16:22'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'financial assets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Object subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:16:40'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Object subclass: #Portfolio
+	instanceVariableNames: 'xxx'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:16:58'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'xxx'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:17:06'!
+Object subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342747!
+register: anXXX "es una cuenta o un portfolio"
+
+	finantialAssets add: anXXX.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342752!
+transactions
+	
+	| transactions |
+	
+	transactions := OrderedCollection new.	
+	
+	finantialAssets do: [ :anXXX | transactions := transactions, anXXX transactions ].
+	
+	^ transactions .! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342730 overrides: 16896425!
+initialize
+	
+	finantialAssets := 	OrderedCollection new.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342734!
+hasAssociated: anYYY
+	
+	finantialAssets detect: [ :anXXX | anXXX hasAssociated: anYYY ] ifFound: [ ^true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342740!
+hasRegistered: aTransaction
+	
+	finantialAssets detect: [ :anXXX | anXXX hasRegistered: aTransaction ] 
+	ifFound: [ :foundTransaction | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:17:06' prior: 50342724!
+balance
+	
+	^ finantialAssets sum: [ :anXXX | anXXX balance ] ifEmpty: [ 0 ].! !
+!Portfolio methodsFor: 'balance' stamp: 'MS 5/23/2021 23:17:21' prior: 50342934!
+balance
+	
+	^ finantialAssets sum: [ :aFinantialAsset | aFinantialAsset balance ] ifEmpty: [ 0 ].! !
+!Portfolio methodsFor: 'xxxs' stamp: 'MS 5/23/2021 23:17:36' prior: 50342918!
+hasAssociated: anYYY
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anYYY ] ifFound: [ ^true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'xxxs' stamp: 'MS 5/23/2021 23:17:53' prior: 50342946!
+hasAssociated: anotherFinantialAsset
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ ^true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'xxxs' stamp: 'MS 5/23/2021 23:18:09' prior: 50342925!
+hasRegistered: aTransaction
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ] 
+	ifFound: [ :foundTransaction | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'xxxs' stamp: 'MS 5/23/2021 23:18:20' prior: 50342897!
+register: aFinantialAsset "es una cuenta o un portfolio"
+
+	finantialAssets add: aFinantialAsset.! !
+!Portfolio methodsFor: 'xxxs' stamp: 'MS 5/23/2021 23:18:26' prior: 50342903!
+transactions
+	
+	| transactions |
+	
+	transactions := OrderedCollection new.	
+	
+	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactions ].
+	
+	^ transactions .! !
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:19:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:19:32'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:19:32'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:19:59'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:19:59'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:20:19' prior: 50342972!
+register: aFinantialAsset 
+
+	finantialAssets add: aFinantialAsset.! !
+
+Object subclass: #FinantialAsset
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #FinantialAsset category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:30:24'!
+Object subclass: #FinantialAsset
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:30:36'!
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+FinantialAsset subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio' stamp: 'MS 5/23/2021 23:30:46'!
+FinantialAsset subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:30:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:30:53'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:30:53'!
+FAILURE!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'MS 5/23/2021 23:30:56'!
+PASSED!
+!FinantialAsset methodsFor: 'nil' stamp: 'MS 5/23/2021 23:32:12'!
+balance
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:32:21'!
+hasRegistered
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:32:50'!
+hasAssociated: aFinantialAsset
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:33:05'!
+hasRegistered: aTransaction
+	self subclassResponsibility ! !
+
+!methodRemoval: FinantialAsset #hasRegistered stamp: 'MS 5/23/2021 23:33:07'!
+hasRegistered
+	self subclassResponsibility !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:33:16' overrides: 16896425!
+initialize
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:33:27'!
+register: aFinantialAsset
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'as yet unclassified' stamp: 'MS 5/23/2021 23:33:34'!
+transactions
+	self subclassResponsibility ! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:35:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:35:47'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:35:47'!
+FAILURE!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'MS 5/23/2021 23:35:51'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:37:39' prior: 50342999 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets add: aFinantialAsset.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:37:41'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/23/2021 23:38:35'!
+test12
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/23/2021 23:38:51' prior: 50343221!
+test12
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:38:53'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/23/2021 23:39:20' prior: 50343236!
+test12
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:39:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:39:35'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:42:49' prior: 50343187 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets do: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset].
+	
+	finantialAssets add: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:43:59' prior: 50343277 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	"finantialAssets do: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset]."
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundTransaction | ^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets add: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:44:31' prior: 50343290 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	"finantialAssets do: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset]."
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundTransaction | ^ self error: self class errorAlreadyRegistered ]
+	ifNone: [finantialAssets add: aFinantialAsset.].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:44:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:44:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:44:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:44:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:44:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:44:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:44:36'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:44:36'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:44:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:44:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:44:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:44:44'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:44:45'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:45:53' prior: 50343309 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	"finantialAssets do: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset]."
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundTransaction | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:46:01' prior: 50343370 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	"finantialAssets do: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset]."
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:46:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:46:07'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:46:07'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:46:52' prior: 50343389 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets do: [ :registeredFinantialAsset | (registeredFinantialAsset hasAssociated: aFinantialAsset) ifTrue: [^ (self error: self class errorAlreadyRegistered)]].
+	finantialAssets add: aFinantialAsset.
+	
+	"finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.]."! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:46:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:46:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:46:55'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:46:55'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:47:24'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:47:24'!
+FAILURE!
+
+ self = anYYY !
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:51:10'!
+FAILURE!
+
+finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ ^true ] ifNone: [ ^false ].!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:52:46'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:53:16'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:53:41'!
+FAILURE!
+
+(registeredFinantialAsset hasAssociated: aFinantialAsset)!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:56:15'!
+FAILURE!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:56:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:56:42'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:56:42'!
+FAILURE!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:56:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/23/2021 23:56:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:56:47'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/23/2021 23:56:47'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:58:09' prior: 50342954 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ ^true ] ifNone: [ ^false ].! !
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:00:01' prior: 50342813 overrides: 50343105!
+hasAssociated: aReceptiveAccount
+
+	^ self = aReceptiveAccount ! !
+
+----QUIT----(24 May 2021 00:00:15) CuisUniversity-4532.image priorSource: 334043!
+
+----STARTUP---- (24 May 2021 00:00:21) as C:\Program Files (x86)\Smalltalk\windows64\CuisUniversity-4532.image!
+
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:00:24'!
+FAILURE!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'MS 5/24/2021 00:00:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:00:24'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:00:38'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:00:38'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:02:22' prior: 50343576 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ ^true ] ifNone: [ ^false ].
+	
+	finantialAssets do: [ :aFinantialAsset | (aFinantialAsset hasAssociated: anotherFinantialAsset) ifTrue: [^true]].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:02:36' prior: 50343659 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+	
+	"finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ ^true ] ifNone: [ ^false ]."
+	
+	finantialAssets do: [ :aFinantialAsset | (aFinantialAsset hasAssociated: anotherFinantialAsset) ifTrue: [^true]].
+	
+	^false.! !
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:02:39'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:03:41' prior: 50343672 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].
+	
+	"
+	finantialAssets do: [ :aFinantialAsset | (aFinantialAsset hasAssociated: anotherFinantialAsset) ifTrue: [^true]].
+	
+	^false."! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:03:46'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:03:52' prior: 50343688 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:04:08' prior: 50343438 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	"finantialAssets do: [ :registeredFinantialAsset | (registeredFinantialAsset hasAssociated: aFinantialAsset) ifTrue: [^ (self error: self class errorAlreadyRegistered)]].
+	finantialAssets add: aFinantialAsset."
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 00:04:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 00:04:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 00:04:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 00:04:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:04:11'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:04:22' prior: 50343740 overrides: 50343123!
+register: aFinantialAsset 
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:05:07'!
+test13
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:05:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:05:12'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:05:40' prior: 50343804!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	subsubportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	subsubportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:05:59' prior: 50343825!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	subsubportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	subportfolio register: subsubportfolio.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:06:07' prior: 50343845!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	subsubportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subsubportfolio register: account.
+	subportfolio register: subsubportfolio.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:06:25' prior: 50343865!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	subsubportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subsubportfolio register: account.
+	subportfolio register: subsubportfolio.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subsubportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:06:28'!
+FAILURE!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:06:28'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:06:50' prior: 50343730 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:06:51' prior: 50343910 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:06:52'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:09:05'!
+test14
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 00:09:09'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 00:09:09'!
+FAILURE!
+
+Object subclass: #PortfolioState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #PortfolioState category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:16:57'!
+Object subclass: #PortfolioState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+PortfolioState subclass: #PortfolioStateRoot
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #PortfolioStateRoot category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:17:11'!
+PortfolioState subclass: #PortfolioStateRoot
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #PortfolioStateSubPortfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:17:36'!
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets portfolioState'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:17:49'!
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets portfolioState'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets state'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:17:56'!
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets state'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:18:25' prior: 50342913 overrides: 50343119!
+initialize
+	
+	finantialAssets := 	OrderedCollection new.
+	state := PortfolioStateRoot new.! !
+
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: 'parent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #PortfolioStateSubPortfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 00:22:32'!
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: 'parent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:37:29' prior: 50343790 overrides: 50343123!
+register: aFinantialAsset 
+
+	"has associated chequeo"
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	
+	
+	aFinantialAsset registerAsParent: self.! !
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:37:51'!
+registerAsParent: aPortfolio
+	! !
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:38:46' prior: 50344091!
+registerAsParent: aPortfolio
+	state := PortfolioStateSubPortfolio withParent: aPortfolio.! !
+!PortfolioStateSubPortfolio class methodsFor: 'nil' stamp: 'MS 5/24/2021 00:39:22'!
+withParent: aPortfolio
+	self new initializeWithParent: aPortfolio.! !
+!PortfolioStateSubPortfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:39:42'!
+initializeWithParent: aPortfolio
+	parent := aPortfolio.! !
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:40:11'!
+registerAsParent: aPortfolio
+! !
+!FinantialAsset methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:40:21'!
+registerAsParent: aPortfolio
+	self subclassResponsibility ! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 00:40:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 00:40:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 00:40:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 00:40:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:40:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 00:40:30'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 00:40:30'!
+FAILURE!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 00:40:34'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:41:58' prior: 50344074 overrides: 50343123!
+register: aFinantialAsset 
+
+	state portfolioParentHasAssociated: aFinantialAsset.
+	"has associated chequeo"
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	
+	
+	aFinantialAsset registerAsParent: self.! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:43:01' prior: 50344158 overrides: 50343123!
+register: aFinantialAsset 
+
+	state parentOf: self hasAssociated: aFinantialAsset.
+	"has associated chequeo"
+
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	
+	
+	aFinantialAsset registerAsParent: self.! !
+!PortfolioState methodsFor: 'nil' stamp: 'MS 5/24/2021 00:43:28'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+! !
+!PortfolioState methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:43:30' prior: 50344196!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+	self subclassResponsibility ! !
+!PortfolioStateRoot methodsFor: 'no messages' stamp: 'MS 5/24/2021 00:44:06' overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:44:14' prior: 50344207 overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'nil' stamp: 'MS 5/24/2021 00:44:25' overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+	! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:52:23' prior: 50344221 overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+	self parentOf: parent hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:52:26' prior: 50344227 overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	self parentOf: parent hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:55:20' prior: 50344235 overrides: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	self shouldBeImplemented ! !
+!PortfolioState methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:55:40' prior: 50344201!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	self subclassResponsibility ! !
+
+----QUIT----(24 May 2021 01:00:22) CuisUniversity-4532.image priorSource: 382081!
+
+----STARTUP---- (24 May 2021 14:56:50) as C:\Program Files (x86)\Smalltalk\windows64\CuisUniversity-4532.image!
+
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:38:23'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:38:23'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 15:38:36' prior: 50344178 overrides: 50343123!
+register: aFinantialAsset 
+
+	state parentOf: self hasAssociated: aFinantialAsset.
+	"has associated chequeo"
+"
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	"
+	
+	aFinantialAsset registerAsParent: self.! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 15:39:11' prior: 50344266 overrides: 50343123!
+register: aFinantialAsset 
+
+	state parentOf: self hasAssociated: aFinantialAsset.
+	"has associated chequeo"
+	
+"
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	"
+	
+	aFinantialAsset registerAsParent: self.! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 15:44:20' prior: 50344243 overrides: 50344249!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	aPortfolio hasAssociated: aFinantialAsset in: parent.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:44:55'!
+hasAssociated: aFinantialAsset in: parent
+	! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:46:47' prior: 50344313!
+hasAssociated: aFinantialAsset in: parent
+
+	parent hasParentAssociatedWith: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:47:29'!
+hasParentAssociatedWith: aFinantialAsset
+
+	state parentOf: self hasAssociated: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:47:58' prior: 50344318!
+hasAssociated: aFinantialAsset in: parent
+
+	^ parent hasParentAssociatedWith: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:48:03' prior: 50344324!
+hasParentAssociatedWith: aFinantialAsset
+
+	^ state parentOf: self hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 15:48:10' prior: 50344306 overrides: 50344249!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parent.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:49:30' prior: 50344331!
+hasAssociated: aFinantialAsset in: aParent
+
+	^ aParent hasParentAssociatedWith: aFinantialAsset.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 15:50:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 15:50:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 15:50:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:50:35'!
+FAILURE!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 15:50:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 15:50:54'!
+FAILURE!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 15:50:54'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 15:51:36' prior: 50344286 overrides: 50343123!
+register: aFinantialAsset 
+
+	state parentOf: self hasAssociated: aFinantialAsset.
+	"has associated chequeo"
+	
+"
+	(finantialAssets includes: aFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :registeredFinantialAsset | registeredFinantialAsset hasAssociated: aFinantialAsset ]
+	ifFound: [ :foundAsset | ^ (self error: self class errorAlreadyRegistered) ]
+	ifNone: [finantialAssets add: aFinantialAsset.].
+	"
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 15:51:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:51:38'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:51:38'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:51:44'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:51:44'!
+FAILURE!
+
+self parent!
+!PortfolioStateSubPortfolio class methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 15:58:02' prior: 50344101!
+withParent: aPortfolio
+	^ self new initializeWithParent: aPortfolio.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 15:58:19'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:03:08' prior: 50343966!
+test14
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	portfolio := Portfolio create.
+	subportfolioA := Portfolio create.
+	subportfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolioA register: account.
+	subportfolioB register: account.
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:03:13'!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	portfolio := Portfolio create.
+	subportfolioA := Portfolio create.
+	subportfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolioA register: account.
+	subportfolioB register: account.
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:03:08' prior: 50344499!
+test14
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	portfolio := Portfolio create.
+	subportfolioA := Portfolio create.
+	subportfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolioA register: account.
+	subportfolioB register: account.
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:03:33'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:03:33'!
+FAILURE!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:09:05' prior: 50344537!
+test14
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:03:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:03:49'!
+FAILURE!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:03:50'!
+FAILURE!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:03:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 16:03:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:04:01'!
+FAILURE!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:04:01'!
+FAILURE!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:38:17' prior: 50343924 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset xxx: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:38:28' prior: 50344627 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset zzz: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:39:59'!
+zzz: aPortfolio
+	
+! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:41:16' prior: 50344656!
+zzz: aPortfolio
+	
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset].! !
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:43:29'!
+zzz: aFinantialAsset
+
+	^ aFinantialAsset hasAssociated: aFinantialAsset! !
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:43:32' prior: 50344666!
+zzz: aFinantialAsset
+
+	^ aFinantialAsset hasAssociated: self.! !
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:45:32' prior: 50344672!
+zzz: aPortfolio
+
+	^ aPortfolio hasAssociated: self.! !
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:46:21' prior: 50344678!
+zzz: aPortfolio! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:47:27'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:21' prior: 50344642 overrides: 50343105!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:48'!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio
+	
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset].! !
+
+!methodRemoval: Portfolio #zzz: stamp: 'MS 5/24/2021 16:49:48'!
+zzz: aPortfolio
+	
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset].!
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:56'!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio! !
+
+!methodRemoval: ReceptiveAccount #zzz: stamp: 'MS 5/24/2021 16:49:57'!
+zzz: aPortfolio!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'MS 5/24/2021 16:50:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:50:04'!
+PASSED!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:50:17' prior: 50344400 overrides: 50343123!
+register: aFinantialAsset 
+
+	state parentOf: self hasAssociated: aFinantialAsset.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:53:38'!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio create.
+	portfolioA := Portfolio create.
+	portfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolio register: account.
+	portfolioA register: subportfolio.
+	portfolioB register: subportfolio.
+	
+	
+	self
+		should: [ portfolioB register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:53:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:53:49'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:54:27' prior: 50344827!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio create.
+	portfolioA := Portfolio create.
+	portfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioB register: subportfolio.
+	portfolioB register: account.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:31'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:54:45' prior: 50344851!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio create.
+	portfolioA := Portfolio create.
+	portfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioB register: subportfolio.
+	portfolioA register: account.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:47'!
+FAILURE!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:47'!
+FAILURE!
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:54:55' prior: 50344875!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio create.
+	portfolioA := Portfolio create.
+	portfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	portfolioB register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:56'!
+FAILURE!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:54:56'!
+FAILURE!
+
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: 'parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #PortfolioStateSubPortfolio category: 'Portfolio-Ejercicio' stamp: 'MS 5/24/2021 16:55:07'!
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: 'parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!PortfolioStateSubPortfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 16:55:21' prior: 50344106!
+initializeWithParent: aPortfolio
+	parents add: aPortfolio.! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 16:55:30' prior: 50344346 overrides: 50344249!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
+!PortfolioStateSubPortfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 16:55:49' prior: 50344937!
+initializeWithParent: aPortfolio
+	parents := OrderedCollection new.
+	parents add: aPortfolio.! !
+!PortfolioStateSubPortfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 16:55:51' prior: 50344950!
+initializeWithParent: aPortfolio
+
+	parents := OrderedCollection new.
+	parents add: aPortfolio.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 16:56:01' prior: 50344353!
+hasAssociated: aFinantialAsset in: aParent
+
+	^ 
+	aParent hasParentAssociatedWith: aFinantialAsset.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 16:57:08' prior: 50344964!
+hasAssociated: aFinantialAsset in: parents
+
+	parents do: [ :aParent | aParent hasParentAssociatedWith: aFinantialAsset ].
+	.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 16:58:26' prior: 50344971!
+hasAssociated: aFinantialAsset in: parents
+
+	parents do: [ :aParent | (aParent hasParentAssociatedWith: aFinantialAsset) ifTrue: [^true]].
+	
+	^false
+	! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 16:59:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:59:14'!
+FAILURE!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 16:59:14'!
+FAILURE!
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:02:10' prior: 50344095 overrides: 50344115!
+registerAsParent: aPortfolio
+	"state := PortfolioStateSubPortfolio withParent: aPortfolio."
+	state registerNewParent: aPortfolio.! !
+!PortfolioStateRoot methodsFor: 'nil' stamp: 'MS 5/24/2021 17:02:36'!
+registerNewParent: aPortfolio
+	! !
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:03:45' prior: 50345027 overrides: 50344115!
+registerAsParent: aPortfolio
+	"state := PortfolioStateSubPortfolio withParent: aPortfolio."
+	state register: aPortfolio asNewParentOf: self.! !
+
+!methodRemoval: PortfolioStateRoot #registerNewParent: stamp: 'MS 5/24/2021 17:03:52'!
+registerNewParent: aPortfolio
+	!
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:04:13'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+	! !
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:04:46' prior: 50345050!
+register: aParentPortfolio asNewParentOf: aPortfolio
+	aPortfolio subportfolioOf: aParentPortfolio! !
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:05:23'!
+subportfolioOf: aParentPortfolio
+	state := PortfolioStateSubPortfolio withParent: aParentPortfolio.
+	! !
+!PortfolioStateSubPortfolio methodsFor: 'nil' stamp: 'MS 5/24/2021 17:06:19'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+	parents add: aParentPortfolio.! !
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:06:50' prior: 50345039 overrides: 50344115!
+registerAsParent: aPortfolio
+	state register: aPortfolio asNewParentOf: self.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'MS 5/24/2021 17:07:34'!
+PASSED!
+
+----SNAPSHOT----(24 May 2021 17:08:23) CuisUniversity-4532.image priorSource: 403317!

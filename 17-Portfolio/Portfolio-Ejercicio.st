@@ -161,6 +161,117 @@ test11
 		withExceptionDo: [ :anError |
 			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
 
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/23/2021 23:39:20'!
+test12
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:06:25'!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	subsubportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subsubportfolio register: account.
+	subportfolio register: subsubportfolio.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subsubportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:09:05'!
+test14
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio create.
+	
+	subportfolio := Portfolio create.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:03:13'!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	portfolio := Portfolio create.
+	subportfolioA := Portfolio create.
+	subportfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolioA register: account.
+	subportfolioB register: account.
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:54:55'!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio create.
+	portfolioA := Portfolio create.
+	portfolioB := Portfolio create.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	portfolioB register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
 
 !classDefinition: #ReceptiveAccountTest category: 'Portfolio-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
@@ -360,50 +471,124 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
-!classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
-Object subclass: #Portfolio
-	instanceVariableNames: 'xxx'
+!classDefinition: #FinantialAsset category: 'Portfolio-Ejercicio'!
+Object subclass: #FinantialAsset
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'balance' stamp: 'ENC 5/20/2021 20:32:57'!
+!FinantialAsset methodsFor: 'balance' stamp: 'MS 5/23/2021 23:32:12'!
+balance
+	self subclassResponsibility ! !
+
+
+!FinantialAsset methodsFor: 'initialization' stamp: 'MS 5/23/2021 23:33:16'!
+initialize
+	self subclassResponsibility ! !
+
+!FinantialAsset methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:40:21'!
+registerAsParent: aPortfolio
+	self subclassResponsibility ! !
+
+
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:32:50'!
+hasAssociated: aFinantialAsset
+	self subclassResponsibility ! !
+
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:05'!
+hasRegistered: aTransaction
+	self subclassResponsibility ! !
+
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:27'!
+register: aFinantialAsset
+	self subclassResponsibility ! !
+
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:34'!
+transactions
+	self subclassResponsibility ! !
+
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
+FinantialAsset subclass: #Portfolio
+	instanceVariableNames: 'finantialAssets state'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!Portfolio methodsFor: 'balance' stamp: 'MS 5/23/2021 23:17:21'!
 balance
 	
-	^ xxx sum: [ :anXXX | anXXX balance ] ifEmpty: [ 0 ].! !
+	^ finantialAssets sum: [ :aFinantialAsset | aFinantialAsset balance ] ifEmpty: [ 0 ].! !
 
 
-!Portfolio methodsFor: 'initialization' stamp: 'ENC 5/20/2021 20:32:33'!
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:18:25'!
 initialize
 	
-	xxx := 	OrderedCollection new.! !
+	finantialAssets := 	OrderedCollection new.
+	state := PortfolioStateRoot new.! !
+
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:06:50'!
+registerAsParent: aPortfolio
+	state register: aPortfolio asNewParentOf: self.! !
+
+!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:05:23'!
+subportfolioOf: aParentPortfolio
+	state := PortfolioStateSubPortfolio withParent: aParentPortfolio.
+	! !
 
 
-!Portfolio methodsFor: 'xxxs' stamp: 'ENC 5/20/2021 21:00:29'!
-hasAssociated: anYYY
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 16:58:26'!
+hasAssociated: aFinantialAsset in: parents
+
+	parents do: [ :aParent | (aParent hasParentAssociatedWith: aFinantialAsset) ifTrue: [^true]].
 	
-	xxx detect: [ :anXXX | anXXX hasAssociated: anYYY ] ifFound: [ ^true ] ifNone: [ ^false ].! !
+	^false
+	! !
 
-!Portfolio methodsFor: 'xxxs' stamp: 'ENC 5/20/2021 20:31:48'!
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:48:03'!
+hasParentAssociatedWith: aFinantialAsset
+
+	^ state parentOf: self hasAssociated: aFinantialAsset.! !
+
+
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:48'!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio
+	
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset].! !
+
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:21'!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:18:09'!
 hasRegistered: aTransaction
 	
-	xxx detect: [ :anXXX | anXXX hasRegistered: aTransaction ] 
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ] 
 	ifFound: [ :foundTransaction | ^ true ] 
 	ifNone: [ ^false ].! !
 
-!Portfolio methodsFor: 'xxxs' stamp: 'ENC 5/20/2021 20:56:26'!
-register: anXXX "es una cuenta o un portfolio"
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:50:17'!
+register: aFinantialAsset 
 
-	xxx add: anXXX.! !
+	state parentOf: self hasAssociated: aFinantialAsset.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
 
-!Portfolio methodsFor: 'xxxs' stamp: 'ENC 5/20/2021 20:32:11'!
+!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:18:26'!
 transactions
 	
 	| transactions |
 	
 	transactions := OrderedCollection new.	
 	
-	xxx do: [ :anXXX | transactions := transactions, anXXX transactions ].
+	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactions ].
 	
 	^ transactions .! !
 
@@ -426,7 +611,7 @@ create
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
-Object subclass: #ReceptiveAccount
+FinantialAsset subclass: #ReceptiveAccount
 	instanceVariableNames: 'transactions'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -437,14 +622,32 @@ initialize
 
 	transactions := OrderedCollection new.! !
 
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:40:11'!
+registerAsParent: aPortfolio
+! !
 
-!ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 7/13/2011 18:37'!
+
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:56'!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio! !
+
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:00:01'!
+hasAssociated: aReceptiveAccount
+
+	^ self = aReceptiveAccount ! !
+
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'NR 10/17/2019 03:28:43'!
+hasRegistered: aTransaction
+
+	^ transactions includes: aTransaction 
+! !
+
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'HernanWilkinson 7/13/2011 18:37'!
 register: aTransaction
 
 	transactions add: aTransaction 
 ! !
 
-!ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 7/13/2011 18:37'!
+!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'HernanWilkinson 7/13/2011 18:37'!
 transactions 
 
 	^ transactions copy! !
@@ -463,14 +666,66 @@ balance
 	
 	^ partialBalance! !
 
+
+!classDefinition: #PortfolioState category: 'Portfolio-Ejercicio'!
+Object subclass: #PortfolioState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
 
-!ReceptiveAccount methodsFor: 'testing' stamp: 'ENC 5/20/2021 21:01:23'!
-hasAssociated: anYYY
+!PortfolioState methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:55:40'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
 
-	^ self = anYYY ! !
+	self subclassResponsibility ! !
 
-!ReceptiveAccount methodsFor: 'testing' stamp: 'NR 10/17/2019 03:28:43'!
-hasRegistered: aTransaction
+
+!classDefinition: #PortfolioStateRoot category: 'Portfolio-Ejercicio'!
+PortfolioState subclass: #PortfolioStateRoot
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
 
-	^ transactions includes: aTransaction 
-! !
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:44:14'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:04:46'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+	aPortfolio subportfolioOf: aParentPortfolio! !
+
+
+!classDefinition: #PortfolioStateSubPortfolio category: 'Portfolio-Ejercicio'!
+PortfolioState subclass: #PortfolioStateSubPortfolio
+	instanceVariableNames: 'parents'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!PortfolioStateSubPortfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 16:55:51'!
+initializeWithParent: aPortfolio
+
+	parents := OrderedCollection new.
+	parents add: aPortfolio.! !
+
+
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 16:55:30'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
+
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:06:19'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+	parents add: aParentPortfolio.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'PortfolioStateSubPortfolio class' category: 'Portfolio-Ejercicio'!
+PortfolioStateSubPortfolio class
+	instanceVariableNames: ''!
+
+!PortfolioStateSubPortfolio class methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 15:58:02'!
+withParent: aPortfolio
+	^ self new initializeWithParent: aPortfolio.! !
