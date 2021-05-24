@@ -13,8 +13,8 @@ setUp
 	east := CardinalMarsRoverEast new.
 	west := CardinalMarsRoverWest new.	! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:12:24'!
-test01
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:39:59'!
+test01emptyCommandDoesNothing
 
 	| marsRover |
 	
@@ -24,8 +24,8 @@ test01
 	self assert: 0@0 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:34:28'!
-test02
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:41:45'!
+test02moveForwardFacingNorthIncrementsYAxis
 
 	| marsRover |
 	
@@ -35,8 +35,8 @@ test02
 	self assert: 2@4 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:35:32'!
-test03
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:41:34'!
+test03moveBackwardsFacingNorthDecrementsYAxis
 
 	| marsRover |
 	
@@ -46,8 +46,8 @@ test03
 	self assert: 2@1 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:12:55'!
-test04
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:42:46'!
+test04rotateLeftFacingNorthChangesCardinalToWest
 
 	| marsRover |
 	
@@ -57,8 +57,8 @@ test04
 	self assert: 0@0 equals: marsRover position.
 	self assert: marsRover cardinal isWest.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:13:09'!
-test05
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:43:28'!
+test05rotateRightFacingNorthChangesCardinalToEast
 
 	| marsRover |
 	
@@ -68,8 +68,8 @@ test05
 	self assert: 0@0 equals: marsRover position.
 	self assert: marsRover cardinal isEast.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:34:51'!
-test06
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:43:46'!
+test06moveForwardFacingEastIncrementsXAxis
 
 	| marsRover |
 	
@@ -79,8 +79,8 @@ test06
 	self assert: 3@3 equals: marsRover position.
 	self assert: marsRover cardinal isEast.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:35:03'!
-test07
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:44:17'!
+test07moveForwardFacingSouthDecrementsYAxis
 
 	| marsRover |
 	
@@ -90,8 +90,8 @@ test07
 	self assert: 2@2 equals: marsRover position.
 	self assert: marsRover cardinal isSouth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:35:15'!
-test08
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:44:36'!
+test08moveForwardFacingWestDecrementsXAxis
 
 	| marsRover |
 	
@@ -101,8 +101,8 @@ test08
 	self assert: 1@3 equals: marsRover position.
 	self assert: marsRover cardinal isWest.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:13:42'!
-test09
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:44:59'!
+test09moveBackwardsFacingEastDecrementsXAxis
 
 	| marsRover |
 	
@@ -112,8 +112,8 @@ test09
 	self assert: 1@3 equals: marsRover position.
 	self assert: marsRover cardinal isEast.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:13:49'!
-test10
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:45:22'!
+test10moveBackwardsFacingSouthIncrementsYAxis
 
 	| marsRover |
 	
@@ -123,8 +123,8 @@ test10
 	self assert: 2@4 equals: marsRover position.
 	self assert: marsRover cardinal isSouth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:13:56'!
-test11
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:45:42'!
+test11moveBackwardsFacingWestIncrementsXAxis
 
 	| marsRover |
 	
@@ -134,8 +134,8 @@ test11
 	self assert: 3@3 equals: marsRover position.
 	self assert: marsRover cardinal isWest.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:17:08'!
-test12
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:47:23'!
+test12rotateLeftFacingEastChangesCardinalToNorth
 
 	| marsRover |
 	
@@ -145,8 +145,8 @@ test12
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:18:25'!
-test13
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:47:36'!
+test13rotateLeftFacingSouthChangesCardinalToEast
 
 	| marsRover |
 	
@@ -156,8 +156,8 @@ test13
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isEast.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:19:02'!
-test14
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:47:56'!
+test14rotateLeftFacingWestChangesCardinalToSouth
 
 	| marsRover |
 	
@@ -167,8 +167,8 @@ test14
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isSouth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:22:11'!
-test15
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:48:18'!
+test15rotateRightFacingWestChangesCardinalToNorth
 
 	| marsRover |
 	
@@ -178,8 +178,8 @@ test15
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:23:20'!
-test16
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:48:51'!
+test16rotateRightFacingSouthChangesCardinalToWest
 
 	| marsRover |
 	
@@ -189,8 +189,8 @@ test16
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isWest.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:24:15'!
-test17
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:49:09'!
+test17rotateRightFacingEastChangesCardinalToSouth
 
 	| marsRover |
 	
@@ -200,8 +200,8 @@ test17
 	self assert: 2@3 equals: marsRover position.
 	self assert: marsRover cardinal isSouth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:36:46'!
-test18
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 14:50:57'!
+test18moveForwardTwiceFacingNorthIncrementsYAxisTwoTimes
 
 	| marsRover |
 	
@@ -211,8 +211,8 @@ test18
 	self assert: 2@5 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:38:48'!
-test19
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 15:00:12'!
+test19moveForwardThriceFacingNorthIncrementsYAxisThreeTimes
 
 	| marsRover |
 	
@@ -222,8 +222,8 @@ test19
 	self assert: 2@6 equals: marsRover position.
 	self assert: marsRover cardinal isNorth.! !
 
-!MarsRoverTests methodsFor: 'testing' stamp: 'ENC 5/16/2021 00:58:30'!
-test20
+!MarsRoverTests methodsFor: 'testing' stamp: 'MS 5/17/2021 15:00:30'!
+test20InvalidCommandRaiseErrorAndStopExecuting
 
 	| marsRover |
 	
