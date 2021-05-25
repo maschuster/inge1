@@ -4329,3 +4329,5562 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(24 May 2021 17:08:23) CuisUniversity-4532.image priorSource: 403317!
+
+----STARTUP---- (24 May 2021 22:46:15) as /Users/ecerdeira/Desktop/Imagen Limpia/CuisUniversity-4532.image!
+
+
+----End fileIn of /Users/ecerdeira/Desktop/Portfolio-Ejercicio.st----!
+!Withdraw methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:49:53'!
+addValueTo: partialBalance
+
+	^ partialBalance - value! !
+!AccountTransaction methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:49:53'!
+addValueTo: partialBalance
+
+	self subclassResponsibility.! !
+!Deposit methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:49:53' overrides: 50903178!
+addValueTo: partialBalance
+
+	^ partialBalance + value! !
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 22:49:53' prior: 50903071 overrides: 50902869!
+balance
+
+	| partialBalance |
+	
+	partialBalance := 0.
+	
+	transactions do: [ :aTransaction | 
+		partialBalance := aTransaction addValueTo: partialBalance.
+	 ].
+	
+	^ partialBalance! !
+
+!methodRemoval: Withdraw #xxx: stamp: 'ENC 5/24/2021 22:49:53'!
+xxx: partialBalance
+
+	^ partialBalance - value!
+
+!methodRemoval: AccountTransaction #xxx: stamp: 'ENC 5/24/2021 22:49:53'!
+xxx: partialBalance
+
+	self subclassResponsibility.!
+
+!methodRemoval: Deposit #xxx: stamp: 'ENC 5/24/2021 22:49:53'!
+xxx: partialBalance
+
+	^ partialBalance + value!
+!Deposit methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:07' prior: 50903183 overrides: 50903178!
+addValueTo: aPartialBalance
+
+	^ aPartialBalance + value! !
+!Withdraw methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:14' prior: 50903173 overrides: 50903178!
+addValueTo: aPartialBalance
+
+	^ aPartialBalance - value! !
+!AccountTransaction methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:20' prior: 50903178!
+addValueTo: aPartialBalance
+
+	self subclassResponsibility.! !
+!Portfolio methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:04:54' prior: 50902933!
+subportfolioOf: aParentPortfolio
+
+	state := PortfolioStateSubPortfolio withParent: aParentPortfolio.
+	! !
+!Portfolio methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:05:01' prior: 50902928 overrides: 50902878!
+registerAsParent: aPortfolio
+
+	state register: aPortfolio asNewParentOf: self.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'ENC 5/24/2021 23:05:27' prior: 50902939!
+hasAssociated: aFinantialAsset in: parents
+
+	parents do: [ :aParent | (aParent hasParentAssociatedWith: aFinantialAsset) ifTrue: [ ^true ] ].
+	
+	^ false.
+	! !
+!ReceptiveAccount methodsFor: 'balance' stamp: 'ENC 5/24/2021 23:06:10' prior: 50903189 overrides: 50902869!
+balance
+
+	| partialBalance |
+	
+	partialBalance := 0.
+	
+	transactions do: [ :aTransaction | partialBalance := aTransaction addValueTo: partialBalance ].
+	
+	^ partialBalance! !
+!FinantialAsset methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:06:31' prior: 50902874 overrides: 16896425!
+initialize
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:06:34' prior: 50902878!
+registerAsParent: aPortfolio
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'ENC 5/24/2021 23:06:38' prior: 50902883!
+hasAssociated: aFinantialAsset
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'ENC 5/24/2021 23:06:42' prior: 50902888!
+hasRegistered: aTransaction
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'ENC 5/24/2021 23:06:45' prior: 50902893!
+register: aFinantialAsset
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'finantial assets' stamp: 'ENC 5/24/2021 23:06:49' prior: 50902898!
+transactions
+
+	self subclassResponsibility ! !
+!FinantialAsset methodsFor: 'balance' stamp: 'ENC 5/24/2021 23:06:53' prior: 50902869!
+balance
+
+	self subclassResponsibility ! !
+!PortfolioState methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:07:40'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+
+	self subclassResponsibility! !
+!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:08:25' prior: 50903116 overrides: 50903291!
+register: aParentPortfolio asNewParentOf: aPortfolio
+
+	aPortfolio subportfolioOf: aParentPortfolio! !
+!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:08:32' prior: 50903150 overrides: 50903291!
+register: aParentPortfolio asNewParentOf: aPortfolio
+
+	parents add: aParentPortfolio.! !
+!PortfolioStateRoot methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:12:24'!
+hasAssociated: aPortfolio inParentsOf: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:12:24'!
+hasAssociated: aPortfolio inParentsOf: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
+!PortfolioState methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:12:24'!
+hasAssociated: aPortfolio inParentsOf: aFinantialAsset
+
+	self subclassResponsibility ! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:12:24' prior: 50902947!
+hasParentAssociatedWith: aFinantialAsset
+
+	^ state hasAssociated: self inParentsOf: aFinantialAsset.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:12:24' prior: 50902985 overrides: 50903277!
+register: aFinantialAsset 
+
+	state hasAssociated: self inParentsOf: aFinantialAsset.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+
+!methodRemoval: PortfolioStateRoot #parentOf:hasAssociated: stamp: 'ENC 5/24/2021 23:12:24'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset.!
+
+!methodRemoval: PortfolioStateSubPortfolio #parentOf:hasAssociated: stamp: 'ENC 5/24/2021 23:12:24'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.!
+
+!methodRemoval: PortfolioState #parentOf:hasAssociated: stamp: 'ENC 5/24/2021 23:12:24'!
+parentOf: aPortfolio hasAssociated: aFinantialAsset
+
+	self subclassResponsibility !
+!PortfolioState methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:12:40' prior: 50903324!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	self subclassResponsibility ! !
+!PortfolioStateRoot methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:12:54' prior: 50903312 overrides: 50903364!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:13:06' prior: 50903318 overrides: 50903364!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
+!Portfolio methodsFor: 'finantial assets - private' stamp: 'ENC 5/24/2021 23:13:23' prior: 50903330!
+hasParentAssociatedWith: aFinantialAsset
+
+	^ state hasAssociated: aFinantialAsset inParentsOf: self.! !
+!Portfolio methodsFor: 'finantial assets' stamp: 'ENC 5/24/2021 23:13:45' prior: 50903337 overrides: 50903277!
+register: aFinantialAsset 
+
+	state hasAssociated: aFinantialAsset inParentsOf: self.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:14:02'!
+PASSED!
+!PortfolioStateSubPortfolio class methodsFor: 'class initialization' stamp: 'ENC 5/24/2021 23:15:29' prior: 50903166!
+withParent: aPortfolio
+
+	^ self new initializeWithParent: aPortfolio.! !
+!PortfolioStateSubPortfolio class methodsFor: 'class initialization' stamp: 'ENC 5/24/2021 23:15:38' prior: 50903440!
+withParent: aParentPortfolio
+
+	^ self new initializeWithParent: aParentPortfolio.! !
+
+!methodRemoval: AccountTransaction #value stamp: 'ENC 5/24/2021 23:17:43'!
+value 
+
+	self subclassResponsibility !
+
+!methodRemoval: Deposit #value stamp: 'ENC 5/24/2021 23:17:46'!
+value
+
+	^ value!
+
+!methodRemoval: Withdraw #value stamp: 'ENC 5/24/2021 23:17:51'!
+value
+
+	^ value!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:17:56'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:17:57'!
+FAILURE!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:17:57'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:17:57'!
+FAILURE!
+!Withdraw methodsFor: 'value' stamp: 'ENC 5/24/2021 23:18:45' overrides: 16881508!
+value
+
+	^ value! !
+!Deposit methodsFor: 'value' stamp: 'ENC 5/24/2021 23:18:52' overrides: 16881508!
+value
+
+	^ value! !
+!AccountTransaction methodsFor: 'value' stamp: 'ENC 5/24/2021 23:19:02' overrides: 16881508!
+value
+
+	self subclassResponsibility ! !
+!AccountTransaction methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:20:05'!
+initializeFor: aValue
+
+	| value |
+	value := aValue ! !
+!AccountTransaction methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:20:12' prior: 50903540!
+initializeFor: aValue
+
+	| value |
+	
+	value := aValue ! !
+
+AccountTransaction subclass: #Deposit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Deposit category: 'Portfolio-Ejercicio' stamp: 'ENC 5/24/2021 23:20:23'!
+AccountTransaction subclass: #Deposit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+AccountTransaction subclass: #Withdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #Withdraw category: 'Portfolio-Ejercicio' stamp: 'ENC 5/24/2021 23:20:26'!
+AccountTransaction subclass: #Withdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Object subclass: #AccountTransaction
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!methodRemoval: Deposit #value stamp: 'ENC 5/24/2021 23:20:51'!
+value
+
+	^ value!
+
+!methodRemoval: Withdraw #value stamp: 'ENC 5/24/2021 23:20:57'!
+value
+
+	^ value!
+
+Object subclass: #AccountTransaction
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+Object subclass: #AccountTransaction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #AccountTransaction category: 'Portfolio-Ejercicio' stamp: 'ENC 5/24/2021 23:21:12'!
+Object subclass: #AccountTransaction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!AccountTransaction methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:21:35' prior: 50903545!
+initializeFor: aValue
+
+	| value2|
+	
+	value2 := aValue ! !
+
+Object subclass: #AccountTransaction
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #AccountTransaction category: 'Portfolio-Ejercicio' stamp: 'ENC 5/24/2021 23:21:43'!
+Object subclass: #AccountTransaction
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!AccountTransaction methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:21:52' prior: 50903601!
+initializeFor: aValue
+	
+	value := aValue ! !
+!AccountTransaction methodsFor: 'value' stamp: 'ENC 5/24/2021 23:21:59' prior: 50903536 overrides: 16881508!
+value
+
+	^ value! !
+
+!methodRemoval: Deposit #initializeFor: stamp: 'ENC 5/24/2021 23:22:03'!
+initializeFor: aValue
+
+	value := aValue !
+
+!methodRemoval: Withdraw #initializeFor: stamp: 'ENC 5/24/2021 23:22:09'!
+initializeFor: aValue
+
+	value := aValue !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:22:19'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:22:21'!
+PASSED!
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'ENC 5/24/2021 23:22:52'!
+for: aValue
+
+	^ self new! !
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'ENC 5/24/2021 23:23:04' prior: 50903699!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
+
+!methodRemoval: Deposit class #for: stamp: 'ENC 5/24/2021 23:23:08'!
+for: aValue
+
+	^ self new initializeFor: aValue !
+
+!methodRemoval: Withdraw class #for: stamp: 'ENC 5/24/2021 23:23:13'!
+for: aValue
+
+	^ self new initializeFor: aValue !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:23:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:23:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:25:31'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:25:32'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:27:36' prior: 50902456!
+test01
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: 0 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:27:41' prior: 50902462!
+test02
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100 .
+	portfolio register: account.
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:27:46' prior: 50902471!
+test03
+
+	| portfolio accountA accountB |
+	
+	portfolio := Portfolio new.
+	
+	accountA := ReceptiveAccount new.	
+	accountA register: depositOf100.
+	portfolio register: accountA.
+
+	accountB := ReceptiveAccount new.	
+	Deposit register: 150 on: accountB.
+	portfolio register: accountB.	
+	
+	self assert: 250 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:27:50' prior: 50902484!
+test04
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self deny: (portfolio hasRegistered: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:27:54' prior: 50902490!
+test05
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:00' prior: 50902500!
+test06
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: portfolio transactions isEmpty.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:09' prior: 50902506!
+test07
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:14' prior: 50902518!
+test08
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	account := ReceptiveAccount new.	
+	Deposit register: 100 on: account.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:19' prior: 50902530!
+test09
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:25' prior: 50902542!
+test10
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:31' prior: 50902556!
+test11
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:36' prior: 50902569!
+test12
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:43' prior: 50902585!
+test13
+
+	| portfolio subportfolio account subsubportfolio |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	subsubportfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subsubportfolio register: account.
+	subportfolio register: subsubportfolio.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ portfolio register: subsubportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:49' prior: 50902604!
+test14
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:54' prior: 50902620!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	portfolio := Portfolio new.
+	subportfolioA := Portfolio new.
+	subportfolioB := Portfolio new.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	subportfolioA register: account.
+	subportfolioB register: account.
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:29:00' prior: 50902639!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio new.
+	portfolioA := Portfolio new.
+	portfolioB := Portfolio new.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	portfolioB register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:29:08'!
+PASSED!
+
+!methodRemoval: Portfolio class #create stamp: 'ENC 5/24/2021 23:29:15'!
+create
+
+	^ self new initialize.!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:29:21'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:29:22'!
+PASSED!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:31:58' prior: 50902961 overrides: 50903266!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] 
+	ifFound: [ :foundAsset | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:32:32' prior: 50903393 overrides: 50903277!
+register: aFinantialAsset 
+
+	state hasAssociated: aFinantialAsset inParentsOf: self.
+	
+	aFinantialAsset registerAsParent: self.
+	
+	finantialAssets add: aFinantialAsset.! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:36:10'!
+xxx: aFinantialAsset yyy: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^false ].
+	
+	finantialAssets detect: [ :finantialAsset | aFinantialAsset hasRegistered: aFinantialAsset ] 
+	ifFound: [ :foundTransaction | ^ true ] 
+	ifNone: [ ^false ].
+	
+	finantialAssets detect: [ :finantialAsset | aFinantialAsset hasAssociated: aFinantialAsset ] 
+	ifFound: [ :foundAsset | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:37:50'!
+yyy: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:38:35' prior: 50902976 overrides: 50903272!
+hasRegistered: aTransaction
+	
+	^ self yyy: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:38:41'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:38:42'!
+PASSED!
+
+!methodRemoval: Portfolio #xxx:yyy: stamp: 'ENC 5/24/2021 23:38:47'!
+xxx: aFinantialAsset yyy: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^false ].
+	
+	finantialAssets detect: [ :finantialAsset | aFinantialAsset hasRegistered: aFinantialAsset ] 
+	ifFound: [ :foundTransaction | ^ true ] 
+	ifNone: [ ^false ].
+	
+	finantialAssets detect: [ :finantialAsset | aFinantialAsset hasAssociated: aFinantialAsset ] 
+	ifFound: [ :foundAsset | ^ true ] 
+	ifNone: [ ^false ].!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:39:28'!
+detectIfAny: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^false ].! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/24/2021 23:39:28' prior: 50904210 overrides: 50903272!
+hasRegistered: aTransaction
+	
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ].! !
+
+!methodRemoval: Portfolio #yyy: stamp: 'ENC 5/24/2021 23:39:28'!
+yyy: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^false ].!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:39:59' prior: 50904159 overrides: 50903266!
+hasAssociated: anotherFinantialAsset
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+	
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:40:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:40:04'!
+PASSED!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:44:05' prior: 50904322 overrides: 50903266!
+hasAssociated: anotherFinantialAsset
+
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	
+	
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ].! !
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:44:08'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/24/2021 23:44:09'!
+PASSED!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:44:23' prior: 50904400 overrides: 50903266!
+hasAssociated: anotherFinantialAsset
+
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [ ^ self error: self class errorAlreadyRegistered ].
+
+	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
+	
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ].! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:46:11' prior: 50902953!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio
+	
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:50:34' prior: 50903860!
+test03
+
+	| portfolio accountA accountB |
+	
+	portfolio := Portfolio new.
+	
+	accountA := ReceptiveAccount new.	
+	accountA register: depositOf100.
+	portfolio register: accountA.
+
+	accountB := ReceptiveAccount new.	
+	accountB register: depositOf150.
+	portfolio register: accountB.	
+	
+	self assert: 250 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:51:04' prior: 50903909!
+test08
+
+	| portfolio subportfolio account |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	subportfolio register: account.
+	
+	portfolio register: subportfolio.
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:53:18'!
+accountWith: aTransaction
+
+	| account |
+	
+	account := ReceptiveAccount new.	
+	account register: aTransaction.
+		
+	^ account ! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:54:08' prior: 50903850!
+test02
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:54:10'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:54:15' prior: 50904531!
+test02
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:54:50' prior: 50904499!
+test03
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:54:52'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:55:12' prior: 50903881!
+test05
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:55:14'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:55:45' prior: 50903897!
+test07
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:55:48' prior: 50904685!
+test07
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:55:48'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:56:08' prior: 50904512!
+test08
+
+	| portfolio subportfolio |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	subportfolio register: (self accountWith: depositOf100).
+	
+	portfolio register: subportfolio.
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:56:39' prior: 50904745!
+test08
+
+	| portfolio subportfolio |
+	
+	subportfolio := Portfolio new.
+	subportfolio register: (self accountWith: depositOf100).
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:56:40'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:56:52' prior: 50903922!
+test09
+
+	| portfolio subportfolio |
+	
+	portfolio := Portfolio new.
+	
+	subportfolio := Portfolio new.
+	subportfolio register: (self accountWith: depositOf100).
+	
+	portfolio register: subportfolio.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:56:54'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:57:10' prior: 50904807!
+test09
+
+	| portfolio subportfolio |
+	
+	subportfolio := Portfolio new.
+	subportfolio register: (self accountWith: depositOf100).
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:57:11'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:57:32' prior: 50903935!
+test10
+
+	| portfolio subportfolio |
+	
+	subportfolio := Portfolio new.
+	subportfolio register: (self accountWith: depositOf100).
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:57:34'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:57:51' prior: 50903950!
+test11
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:58:00'!
+FAILURE!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:57:51' prior: 50904962!
+test11
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	portfolio register: (self accountWith: depositOf100).
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:28:31' prior: 50904977!
+test11
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	
+	account := ReceptiveAccount new.	
+	account register: depositOf100.
+	portfolio register: account.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/24/2021 23:58:53'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:59:59' prior: 50904989!
+test11
+
+	| portfolio account |
+	
+	portfolio := Portfolio new.
+	account := self accountWith: depositOf100.
+	portfolio register: account.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/24/2021 23:59:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:00:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:00:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:00:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:00:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:00:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:00:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:11'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:00:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:00:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:00:55'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:02:08' prior: 50903964!
+test12
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	
+	subportfolio := Portfolio new.
+	subportfolio register: account.
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:02:10'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:02:57' prior: 50903980!
+test13
+
+	| portfolio subportfolio subsubportfolio |
+	
+	subsubportfolio := Portfolio new.
+	subsubportfolio register: (self accountWith: depositOf100).
+	
+	subportfolio := Portfolio new.
+	subportfolio register: subsubportfolio.
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self
+		should: [ portfolio register: subsubportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:02:59'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:03:34' prior: 50904000!
+test14
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	
+	portfolio := Portfolio new.
+	portfolio register: account.
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:03:35'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:03:40' prior: 50905373!
+test14
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	
+	portfolio := Portfolio new.
+	portfolio register: account.
+	
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:04:18' prior: 50904016!
+test15
+
+	| portfolio subportfolioA subportfolioB |
+	
+	portfolio := Portfolio new.
+	subportfolioA := Portfolio new.
+	subportfolioB := Portfolio new.
+	
+	subportfolioA register: (self accountWith: depositOf100).
+	subportfolioB register: (self accountWith: depositOf100).
+	portfolio register: subportfolioA .
+	
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:04:20'!
+FAILURE!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:05:09' prior: 50905444!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	account := self accountWith: depositOf100.
+	
+	subportfolioA := Portfolio new.
+	subportfolioA register: account.
+	
+	subportfolioB := Portfolio new.
+	subportfolioB register: account.
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolioA .
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:05:34'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:06:48' prior: 50904035!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	
+	portfolioA := Portfolio new.	
+	subportfolio := Portfolio new.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	
+	portfolioB := Portfolio new.
+	portfolioB register: subportfolio.
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:06:51'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:07:28'!
+portfolioWith: aFinantialAsset
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: aFinantialAsset .
+	
+	^ portfolio ! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:07:51' prior: 50904579!
+test02
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:07:52'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:06' prior: 50904587!
+test03
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:07'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:20' prior: 50904637!
+test05
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:23'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:34' prior: 50904695!
+test07
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:34'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:47' prior: 50904756!
+test08
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWith: subportfolio.
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:47'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:56' prior: 50904858!
+test09
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	portfolio := self portfolioWith: subportfolio.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:08:59' prior: 50905871!
+test09
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWith: subportfolio.
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:08:59'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:09:09' prior: 50904909!
+test10
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	portfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:09:09'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:09:16' prior: 50905931!
+test10
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	portfolio := self portfolioWith: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:09:17'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:09:19' prior: 50905983!
+test10
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWith: subportfolio.
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:09:20'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:09:45' prior: 50905043!
+test11
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:09:46'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:09:59' prior: 50905260!
+test12
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWith: subportfolio.
+	
+	self
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:10:00'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:10:18' prior: 50905315!
+test13
+
+	| portfolio subportfolio subsubportfolio |
+	
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	subportfolio := self portfolioWith: subsubportfolio.
+	portfolio := self portfolioWith: subportfolio.
+	
+	self
+		should: [ portfolio register: subsubportfolio. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:10:19'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:10:56' prior: 50905428!
+test14
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:10:56'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:11:12' prior: 50905465!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolioA := self portfolioWith: account.
+	subportfolioB := self portfolioWith: account.
+	portfolio := self portfolioWith: subportfolioA .
+	
+	self
+		should: [ portfolio register: subportfolioB. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:11:13'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:12:01' prior: 50905523!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioB := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:12:10'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:13:49'!
+shouldRaiseErrorAlreadyRegisteredFor: aBlock
+	
+	self
+		should: aBlock 
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:14:11' prior: 50906087!
+test11
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.
+	self 
+		should: [ portfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:14:12'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:14:18' prior: 50906425!
+test11
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.! !
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:14:18'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:14:49' prior: 50906139!
+test12
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:14:49'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:15:01' prior: 50906193!
+test13
+
+	| portfolio subportfolio subsubportfolio |
+	
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	subportfolio := self portfolioWith: subsubportfolio.
+	portfolio := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subsubportfolio. ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:15:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:15:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:15:02'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:15:12' prior: 50906249!
+test14
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:15:13'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:15:39' prior: 50906304!
+test15
+
+	| portfolio account subportfolioA subportfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolioA := self portfolioWith: account.
+	subportfolioB := self portfolioWith: account.
+	portfolio := self portfolioWith: subportfolioA .
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subportfolioB. ]! !
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:15:40'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:15:48' prior: 50906360!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioB := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/24/2021 23:29:00' prior: 50906739!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	subportfolio := Portfolio new.
+	portfolioA := Portfolio new.
+	portfolioB := Portfolio new.
+	account := ReceptiveAccount new.	
+	
+	account register: depositOf100.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	portfolioB register: subportfolio.
+	
+	
+	self
+		should: [ subportfolio register: account. ]
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:16:58' prior: 50906753!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	
+	subportfolio := Portfolio new.
+	portfolioA := Portfolio new.
+	portfolioB := Portfolio new.
+	
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	portfolioB register: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:16:59'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:17:17' prior: 50906772!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := Portfolio new.
+	portfolioA register: subportfolio.
+	portfolioA register: account.
+	
+	portfolioB := Portfolio new.
+	portfolioB register: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:17:18'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:17:36' prior: 50906827!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:18:19'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 00:18:35' prior: 50906882!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 00:18:41'!
+PASSED!
+
+----QUIT----(25 May 2021 00:19:39) CuisUniversity-4532.image priorSource: 18264970!
+
+----STARTUP---- (25 May 2021 15:16:19) as /Users/ecerdeira/Desktop/ST limpio/CuisUniversity-4532.image!
+
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:21:31'!
+portfolioWithSubportofolioWith: aFinantialAsset
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: aFinantialAsset.
+	portfolio := self portfolioWith: subportfolio.
+	
+	^ portfolio! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:22:13' prior: 50905822!
+test08
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:22:14'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:22:28' prior: 50905881!
+test09
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:22:30'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:22:39' prior: 50906035!
+test10
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:22:40'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:23:10' prior: 50906529!
+test12
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].! !
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:23:16'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:24:00' prior: 50906580!
+test13
+
+	| portfolio subsubportfolio |
+	
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWithSubportofolioWith: subsubportfolio. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subsubportfolio. ].! !
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:24:03'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:24:54' prior: 50906685!
+test15
+
+	| portfolio account subportfolio |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subportfolio. ]! !
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:24:55'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:25:20' prior: 50906936!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:25:36' prior: 50907304!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:25:38'!
+PASSED!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 15:29:48' prior: 50904175 overrides: 50903277!
+register: aFinantialAsset 
+
+	state hasAssociated: aFinantialAsset inParentsOf: self.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+!PortfolioStateSubPortfolio methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16'!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
+!PortfolioState methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16'!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
+
+	self subclassResponsibility ! !
+!PortfolioStateRoot methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16' overrides: 50907388!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/25/2021 15:31:16' prior: 50907373 overrides: 50903277!
+register: aFinantialAsset 
+
+	state checkIf: aFinantialAsset isAssociatedInParentsOf: self.
+	
+	aFinantialAsset registerAsParent: self.
+	finantialAssets add: aFinantialAsset.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'ENC 5/25/2021 15:31:16' prior: 50903386!
+hasParentAssociatedWith: aFinantialAsset
+
+	^ state checkIf: aFinantialAsset isAssociatedInParentsOf: self.! !
+
+!methodRemoval: PortfolioStateSubPortfolio #hasAssociated:inParentsOf: stamp: 'ENC 5/25/2021 15:31:16'!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset in: parents.!
+
+!methodRemoval: PortfolioState #hasAssociated:inParentsOf: stamp: 'ENC 5/25/2021 15:31:16'!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	self subclassResponsibility !
+
+!methodRemoval: PortfolioStateRoot #hasAssociated:inParentsOf: stamp: 'ENC 5/25/2021 15:31:17'!
+hasAssociated: aFinantialAsset inParentsOf: aPortfolio
+
+	^ aPortfolio hasAssociated: aFinantialAsset.!
+!Portfolio methodsFor: 'operations - private' stamp: 'ENC 5/25/2021 15:32:04' prior: 50904298!
+detectIfAny: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^ false ].! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:36:23'!
+test01BalanceOfEmptyPortfolioIsZero
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: 0 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:36:58'!
+test02BalanceOfAPortfolioWithAnAccountWithDepositOf100Is100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:37:38'!
+test03BalanceOfAPortfolioWithMultipleAccountsIsTheAdditionOfTheirBalances
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.! !
+
+!methodRemoval: PortfolioTest #test03 stamp: 'ENC 5/25/2021 15:37:45'!
+test03
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.!
+
+!methodRemoval: PortfolioTest #test01 stamp: 'ENC 5/25/2021 15:37:49'!
+test01
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: 0 equals: portfolio balance.!
+
+!methodRemoval: PortfolioTest #test02 stamp: 'ENC 5/25/2021 15:37:51'!
+test02
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:40:16'!
+test04AnEmptyPortfolioDoesNotHasRegisteredAnyTransaction
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self deny: (portfolio hasRegistered: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test04 stamp: 'ENC 5/25/2021 15:40:19'!
+test04
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self deny: (portfolio hasRegistered: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:40:46'!
+test05APortfolioWithADepositOf100HasRegisteredTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test05 stamp: 'ENC 5/25/2021 15:40:52'!
+test05
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: (portfolio hasRegistered: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:41:14'!
+test06AnEmptyPortfolioReturnEmptyCollectionOfTransactions
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: portfolio transactions isEmpty.! !
+
+!methodRemoval: PortfolioTest #test06 stamp: 'ENC 5/25/2021 15:41:18'!
+test06
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	
+	self assert: portfolio transactions isEmpty.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:41:49'!
+test07APortfolioWithADepositOf100HasOneElementInTransactionsAndIncludesTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test07 stamp: 'ENC 5/25/2021 15:41:51'!
+test07
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:44:01'!
+test08BalanceOfAPortfolioWithASubportfolioWithADepositOf100Is100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!methodRemoval: PortfolioTest #test08 stamp: 'ENC 5/25/2021 15:44:04'!
+test08
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:44:54'!
+test09APortfolioWithASubportfolioWithADepositOf100HasRegisteredTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test09 stamp: 'ENC 5/25/2021 15:44:57'!
+test09
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:45:32'!
+test10APortfolioWithASubportfolioWithADepositOf100HasOneTransactionAndIsTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test10 stamp: 'ENC 5/25/2021 15:45:35'!
+test10
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:46:25'!
+test11RaiseErrorTryingToRegisterTwiceTheSameTransaction
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.! !
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:46:35'!
+test11RaiseErrorTryingToRegisterTwiceTheSameAccount
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.! !
+
+!methodRemoval: PortfolioTest #test11RaiseErrorTryingToRegisterTwiceTheSameTransaction stamp: 'ENC 5/25/2021 15:46:38'!
+test11RaiseErrorTryingToRegisterTwiceTheSameTransaction
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.!
+
+!methodRemoval: PortfolioTest #test11 stamp: 'ENC 5/25/2021 15:46:40'!
+test11
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:46:53'!
+test11RaiseErrorWhenRegisteringTwiceTheSameAccount
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.! !
+
+!methodRemoval: PortfolioTest #test11RaiseErrorTryingToRegisterTwiceTheSameAccount stamp: 'ENC 5/25/2021 15:46:56'!
+test11RaiseErrorTryingToRegisterTwiceTheSameAccount
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:47:49'!
+test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndRegisteringOnPortfolio
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].! !
+
+!methodRemoval: PortfolioTest #test12 stamp: 'ENC 5/25/2021 15:47:51'!
+test12
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:48:24'!
+test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndPortfolio
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].! !
+
+!methodRemoval: PortfolioTest #test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndRegisteringOnPortfolio stamp: 'ENC 5/25/2021 15:48:30'!
+test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndRegisteringOnPortfolio
+
+	| portfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:49:25'!
+test13RaiseErrorWhenRegisteringTwiceASubsubportfolio
+
+	| portfolio subsubportfolio |
+	
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWithSubportofolioWith: subsubportfolio. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subsubportfolio. ].! !
+
+!methodRemoval: PortfolioTest #test13 stamp: 'ENC 5/25/2021 15:49:28'!
+test13
+
+	| portfolio subsubportfolio |
+	
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWithSubportofolioWith: subsubportfolio. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subsubportfolio. ].!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:50:09'!
+test14RaiseErrorWhenRegisteringAccountOnPortfolioAndSubportfolio
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!methodRemoval: PortfolioTest #test14 stamp: 'ENC 5/25/2021 15:50:12'!
+test14
+
+	| portfolio subportfolio account |
+	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	subportfolio := Portfolio new.
+	portfolio register: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:51:18'!
+test15RaiseErrorWhenRegisteringASubportfolioWithAnAccountAlreadyRegisteredInPortfolio
+
+	| portfolio account subportfolio |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subportfolio. ]! !
+
+!methodRemoval: PortfolioTest #test15 stamp: 'ENC 5/25/2021 15:51:21'!
+test15
+
+	| portfolio account subportfolio |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWithSubportofolioWith: account. 
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subportfolio. ]!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:52:10'!
+test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!methodRemoval: PortfolioTest #test16 stamp: 'ENC 5/25/2021 15:52:16'!
+test16
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:52:34' prior: 50907794!
+test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent
+
+	| subportfolio account portfolioA |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfEmptyPortfolioIsZero stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfAPortfolioWithAnAccountWithDepositOf100Is100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfAPortfolioWithMultipleAccountsIsTheAdditionOfTheirBalances stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test04AnEmptyPortfolioDoesNotHasRegisteredAnyTransaction stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test05APortfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test06AnEmptyPortfolioReturnEmptyCollectionOfTransactions stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test07APortfolioWithADepositOf100HasOneElementInTransactionsAndIncludesTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test08BalanceOfAPortfolioWithASubportfolioWithADepositOf100Is100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test09APortfolioWithASubportfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test10APortfolioWithASubportfolioWithADepositOf100HasOneTransactionAndIsTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test11RaiseErrorWhenRegisteringTwiceTheSameAccount stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndPortfolio stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test13RaiseErrorWhenRegisteringTwiceASubsubportfolio stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test14RaiseErrorWhenRegisteringAccountOnPortfolioAndSubportfolio stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test15RaiseErrorWhenRegisteringASubportfolioWithAnAccountAlreadyRegisteredInPortfolio stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+
+!testRun: #PortfolioTest #test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent stamp: 'ENC 5/25/2021 15:52:35'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:52:52' prior: 50907823!
+test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent
+
+	| subportfolio account portfolioA portfolioB |
+	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
+	
+	portfolioA := self portfolioWith: subportfolio.
+	portfolioA register: account.
+	portfolioB := self portfolioWith: subportfolio.
+	
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
+
+!testRun: #PortfolioTest #test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfEmptyPortfolioIsZero stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfAPortfolioWithAnAccountWithDepositOf100Is100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfAPortfolioWithMultipleAccountsIsTheAdditionOfTheirBalances stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test04AnEmptyPortfolioDoesNotHasRegisteredAnyTransaction stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test05APortfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test06AnEmptyPortfolioReturnEmptyCollectionOfTransactions stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test07APortfolioWithADepositOf100HasOneElementInTransactionsAndIncludesTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test08BalanceOfAPortfolioWithASubportfolioWithADepositOf100Is100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test09APortfolioWithASubportfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test10APortfolioWithASubportfolioWithADepositOf100HasOneTransactionAndIsTheDepositOf100 stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test11RaiseErrorWhenRegisteringTwiceTheSameAccount stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndPortfolio stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test13RaiseErrorWhenRegisteringTwiceASubsubportfolio stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test14RaiseErrorWhenRegisteringAccountOnPortfolioAndSubportfolio stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test15RaiseErrorWhenRegisteringASubportfolioWithAnAccountAlreadyRegisteredInPortfolio stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent stamp: 'ENC 5/25/2021 15:52:55'!
+PASSED!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:53:49'!
+test02BalanceOfAPortfolioWithADepositOf100Is100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!methodRemoval: PortfolioTest #test02BalanceOfAPortfolioWithAnAccountWithDepositOf100Is100 stamp: 'ENC 5/25/2021 15:53:53'!
+test02BalanceOfAPortfolioWithAnAccountWithDepositOf100Is100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	
+	self assert: 100 equals: portfolio balance.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:54:13'!
+test03BalanceOfAPortfolioWithMultipleAccountsIsTheSumOfTheirBalances
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.! !
+
+!methodRemoval: PortfolioTest #test03BalanceOfAPortfolioWithMultipleAccountsIsTheAdditionOfTheirBalances stamp: 'ENC 5/25/2021 15:54:16'!
+test03BalanceOfAPortfolioWithMultipleAccountsIsTheAdditionOfTheirBalances
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
+	
+	self assert: 250 equals: portfolio balance.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:57:53'!
+test07APortfolioWithADepositOf100IncludesOnlyTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test07APortfolioWithADepositOf100HasOneElementInTransactionsAndIncludesTheDepositOf100 stamp: 'ENC 5/25/2021 15:57:56'!
+test07APortfolioWithADepositOf100HasOneElementInTransactionsAndIncludesTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:58:50'!
+test08BalanceOfAPortfolioIncludesBalanceOfSubportfolios
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!methodRemoval: PortfolioTest #test08BalanceOfAPortfolioWithASubportfolioWithADepositOf100Is100 stamp: 'ENC 5/25/2021 15:58:54'!
+test08BalanceOfAPortfolioWithASubportfolioWithADepositOf100Is100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 16:00:42'!
+test10TransactionsOfAPortfolioIncludesTransactionsOfSubportfolio
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test10APortfolioWithASubportfolioWithADepositOf100HasOneTransactionAndIsTheDepositOf100 stamp: 'ENC 5/25/2021 16:00:44'!
+test10APortfolioWithASubportfolioWithADepositOf100HasOneTransactionAndIsTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).!
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 16:01:07'!
+test09APortfolioHasRegisteredTheTransactionsOfSubporfolio
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!methodRemoval: PortfolioTest #test09APortfolioWithASubportfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 16:01:10'!
+test09APortfolioWithASubportfolioWithADepositOf100HasRegisteredTheDepositOf100
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 16:01:39' prior: 50902994 overrides: 50903282!
+transactions
+	
+	| transactions |
+	
+	transactions := OrderedCollection new.	
+	
+	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactionsForPortfolio ].
+	
+	^ transactions .! !
+!ReceptiveAccount methodsFor: 'operations' stamp: 'ENC 5/25/2021 16:01:56'!
+transactionsForPortfolio 
+
+	^ transactions! !
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 16:02:32'!
+transactionsForPortfolio
+	
+	^ self transactions! !
+
+!testRun: #PortfolioTest #test01BalanceOfEmptyPortfolioIsZero stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfAPortfolioWithADepositOf100Is100 stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfAPortfolioWithMultipleAccountsIsTheSumOfTheirBalances stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test04AnEmptyPortfolioDoesNotHasRegisteredAnyTransaction stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test05APortfolioWithADepositOf100HasRegisteredTheDepositOf100 stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test06AnEmptyPortfolioReturnEmptyCollectionOfTransactions stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test07APortfolioWithADepositOf100IncludesOnlyTheDepositOf100 stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test08BalanceOfAPortfolioIncludesBalanceOfSubportfolios stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test09APortfolioHasRegisteredTheTransactionsOfSubporfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test10TransactionsOfAPortfolioIncludesTransactionsOfSubportfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test11RaiseErrorWhenRegisteringTwiceTheSameAccount stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndPortfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test13RaiseErrorWhenRegisteringTwiceASubsubportfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test14RaiseErrorWhenRegisteringAccountOnPortfolioAndSubportfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test15RaiseErrorWhenRegisteringASubportfolioWithAnAccountAlreadyRegisteredInPortfolio stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent stamp: 'ENC 5/25/2021 16:02:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'ENC 5/25/2021 16:02:53'!
+PASSED!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 16:04:54' prior: 50908130 overrides: 50903282!
+transactions
+	
+	| transactions |
+	
+	transactions := OrderedCollection new.	
+	
+	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactionsForPortfolio ].
+	
+	^ transactions.! !
+
+----QUIT----(25 May 2021 16:09:07) CuisUniversity-4532.image priorSource: 18410838!

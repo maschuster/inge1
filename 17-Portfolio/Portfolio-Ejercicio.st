@@ -5,272 +5,211 @@ TestCase subclass: #PortfolioTest
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
+!PortfolioTest methodsFor: 'testing - private' stamp: 'ENC 5/24/2021 23:53:18'!
+accountWith: aTransaction
+
+	| account |
+	
+	account := ReceptiveAccount new.	
+	account register: aTransaction.
+		
+	^ account ! !
+
+!PortfolioTest methodsFor: 'testing - private' stamp: 'ENC 5/25/2021 00:07:28'!
+portfolioWith: aFinantialAsset
+
+	| portfolio |
+	
+	portfolio := Portfolio new.
+	portfolio register: aFinantialAsset .
+	
+	^ portfolio ! !
+
+!PortfolioTest methodsFor: 'testing - private' stamp: 'ENC 5/25/2021 15:21:31'!
+portfolioWithSubportofolioWith: aFinantialAsset
+
+	| portfolio subportfolio |
+	
+	subportfolio := self portfolioWith: aFinantialAsset.
+	portfolio := self portfolioWith: subportfolio.
+	
+	^ portfolio! !
+
+!PortfolioTest methodsFor: 'testing - private' stamp: 'ENC 5/25/2021 00:13:49'!
+shouldRaiseErrorAlreadyRegisteredFor: aBlock
+	
+	self
+		should: aBlock 
+		raise: Error
+		withExceptionDo: [ :anError |
+			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+
+
 !PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:26'!
 setUp
 
 	depositOf100 := Deposit for: 100.
 	depositOf150 := Deposit for: 150.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/17/2021 21:51:06'!
-test01
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:36:23'!
+test01BalanceOfEmptyPortfolioIsZero
 
 	| portfolio |
 	
-	portfolio := Portfolio create.
+	portfolio := Portfolio new.
 	
 	self assert: 0 equals: portfolio balance.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:42'!
-test02
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:53:49'!
+test02BalanceOfAPortfolioWithADepositOf100Is100
 
-	| portfolio account |
+	| portfolio |
 	
-	portfolio := Portfolio create.
-	
-	account := ReceptiveAccount new.	
-	account register: depositOf100 .
-	portfolio register: account.
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
 	
 	self assert: 100 equals: portfolio balance.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:51:00'!
-test03
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:54:13'!
+test03BalanceOfAPortfolioWithMultipleAccountsIsTheSumOfTheirBalances
 
-	| portfolio accountA accountB |
+	| portfolio |
 	
-	portfolio := Portfolio create.
-	
-	accountA := ReceptiveAccount new.	
-	accountA register: depositOf100.
-	portfolio register: accountA.
-
-	accountB := ReceptiveAccount new.	
-	Deposit register: 150 on: accountB.
-	portfolio register: accountB.	
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio register: (self accountWith: depositOf150).
 	
 	self assert: 250 equals: portfolio balance.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test04
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:40:16'!
+test04AnEmptyPortfolioDoesNotHasRegisteredAnyTransaction
 
 	| portfolio |
 	
-	portfolio := Portfolio create.
+	portfolio := Portfolio new.
 	
 	self deny: (portfolio hasRegistered: depositOf100).! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test05
-
-	| portfolio account |
-	
-	portfolio := Portfolio create.
-	
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	portfolio register: account.
-	
-	self assert: (portfolio hasRegistered: depositOf100).! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/19/2021 23:38:32'!
-test06
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:40:46'!
+test05APortfolioWithADepositOf100HasRegisteredTheDepositOf100
 
 	| portfolio |
 	
-	portfolio := Portfolio create.
-	
-	self assert: portfolio transactions isEmpty.! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test07
-
-	| portfolio account |
-	
-	portfolio := Portfolio create.
-	
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	portfolio register: account.
-	
-	self assert: 1 equals: portfolio transactions size.
-	self assert: (portfolio transactions includes: depositOf100).! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:35:06'!
-test08
-
-	| portfolio subportfolio account |
-	
-	portfolio := Portfolio create.
-	
-	subportfolio := Portfolio create.
-	account := ReceptiveAccount new.	
-	Deposit register: 100 on: account.
-	subportfolio register: account.
-	
-	portfolio register: subportfolio.
-	
-	self assert: 100 equals: portfolio balance.! !
-
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test09
-
-	| portfolio subportfolio account |
-	
-	portfolio := Portfolio create.
-	
-	subportfolio := Portfolio create.
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	subportfolio register: account.
-	
-	portfolio register: subportfolio.
+	portfolio := self portfolioWith: (self accountWith: depositOf100).
 	
 	self assert: (portfolio hasRegistered: depositOf100).! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test10
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:41:14'!
+test06AnEmptyPortfolioReturnEmptyCollectionOfTransactions
 
-	| portfolio subportfolio account |
+	| portfolio |
 	
-	portfolio := Portfolio create.
+	portfolio := Portfolio new.
 	
-	subportfolio := Portfolio create.
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	subportfolio register: account.
+	self assert: portfolio transactions isEmpty.! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:57:53'!
+test07APortfolioWithADepositOf100IncludesOnlyTheDepositOf100
+
+	| portfolio |
 	
-	portfolio register: subportfolio.
+	portfolio := self portfolioWith: (self accountWith: depositOf100).	
 	
 	self assert: 1 equals: portfolio transactions size.
 	self assert: (portfolio transactions includes: depositOf100).! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/20/2021 20:50:12'!
-test11
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:58:50'!
+test08BalanceOfAPortfolioIncludesBalanceOfSubportfolios
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 100 equals: portfolio balance.! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 16:01:07'!
+test09APortfolioHasRegisteredTheTransactionsOfSubporfolio
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: (portfolio hasRegistered: depositOf100).! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 16:00:42'!
+test10TransactionsOfAPortfolioIncludesTransactionsOfSubportfolio
+
+	| portfolio |
+	
+	portfolio := self portfolioWithSubportofolioWith: (self accountWith: depositOf100). 
+	
+	self assert: 1 equals: portfolio transactions size.
+	self assert: (portfolio transactions includes: depositOf100).! !
+
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:46:53'!
+test11RaiseErrorWhenRegisteringTwiceTheSameAccount
 
 	| portfolio account |
 	
-	portfolio := Portfolio create.
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
 	
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	portfolio register: account.
-	
-	self
-		should: [ portfolio register: account. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ]	.! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/23/2021 23:39:20'!
-test12
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:48:24'!
+test12RaiseErrorWhenRegisteringAccountOnSubportfolioAndPortfolio
 
-	| portfolio subportfolio account |
+	| portfolio account |
 	
-	portfolio := Portfolio create.
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWithSubportofolioWith: account. 
 	
-	subportfolio := Portfolio create.
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	subportfolio register: account.
-	
-	portfolio register: subportfolio.
-	
-	
-	self
-		should: [ portfolio register: account. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: account. ].! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:06:25'!
-test13
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:49:25'!
+test13RaiseErrorWhenRegisteringTwiceASubsubportfolio
 
-	| portfolio subportfolio account subsubportfolio |
+	| portfolio subsubportfolio |
 	
-	portfolio := Portfolio create.
+	subsubportfolio := self portfolioWith: (self accountWith: depositOf100).
+	portfolio := self portfolioWithSubportofolioWith: subsubportfolio. 
 	
-	subportfolio := Portfolio create.
-	subsubportfolio := Portfolio create.
-	
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	subsubportfolio register: account.
-	subportfolio register: subsubportfolio.
-	
-	portfolio register: subportfolio.
-	
-	
-	self
-		should: [ portfolio register: subsubportfolio. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subsubportfolio. ].! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 00:09:05'!
-test14
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:50:09'!
+test14RaiseErrorWhenRegisteringAccountOnPortfolioAndSubportfolio
 
 	| portfolio subportfolio account |
 	
-	portfolio := Portfolio create.
-	
-	subportfolio := Portfolio create.
-	
-	account := ReceptiveAccount new.	
-	account register: depositOf100.
-	portfolio register: account.
-	
+	account := self accountWith: depositOf100.
+	portfolio := self portfolioWith: account.
+	subportfolio := Portfolio new.
 	portfolio register: subportfolio.
 	
-	
-	self
-		should: [ subportfolio register: account. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:03:13'!
-test15
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:51:18'!
+test15RaiseErrorWhenRegisteringASubportfolioWithAnAccountAlreadyRegisteredInPortfolio
 
-	| portfolio account subportfolioA subportfolioB |
+	| portfolio account subportfolio |
 	
-	portfolio := Portfolio create.
-	subportfolioA := Portfolio create.
-	subportfolioB := Portfolio create.
-	account := ReceptiveAccount new.	
+	account := self accountWith: depositOf100.
+	subportfolio := self portfolioWith: account.
+	portfolio := self portfolioWithSubportofolioWith: account. 
 	
-	account register: depositOf100.
-	subportfolioA register: account.
-	subportfolioB register: account.
-	portfolio register: subportfolioA .
-	
-	
-	self
-		should: [ portfolio register: subportfolioB. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ portfolio register: subportfolio. ]! !
 
-!PortfolioTest methodsFor: 'testing' stamp: 'MS 5/24/2021 16:54:55'!
-test16
+!PortfolioTest methodsFor: 'testing' stamp: 'ENC 5/25/2021 15:52:52'!
+test16RaiseErrorWhenRegisteringAccountAlreadyRegisteredOnAParent
 
 	| subportfolio account portfolioA portfolioB |
 	
-	subportfolio := Portfolio create.
-	portfolioA := Portfolio create.
-	portfolioB := Portfolio create.
-	account := ReceptiveAccount new.	
+	account := self accountWith: depositOf100.
+	subportfolio := Portfolio new.
 	
-	account register: depositOf100.
-	portfolioA register: subportfolio.
+	portfolioA := self portfolioWith: subportfolio.
 	portfolioA register: account.
-	portfolioB register: subportfolio.
+	portfolioB := self portfolioWith: subportfolio.
 	
-	
-	self
-		should: [ subportfolio register: account. ]
-		raise: Error
-		withExceptionDo: [ :anError |
-			self assert: anError messageText = Portfolio errorAlreadyRegistered ].! !
+	self shouldRaiseErrorAlreadyRegisteredFor: [ subportfolio register: account. ]! !
 
 
 !classDefinition: #ReceptiveAccountTest category: 'Portfolio-Ejercicio'!
@@ -366,27 +305,38 @@ test07AccountKnowsItsTransactions
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Ejercicio'!
 Object subclass: #AccountTransaction
-	instanceVariableNames: ''
+	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!AccountTransaction methodsFor: 'value' stamp: 'HernanWilkinson 9/12/2011 12:25'!
-value 
+!AccountTransaction methodsFor: 'value' stamp: 'ENC 5/24/2021 23:21:59'!
+value
 
-	self subclassResponsibility ! !
+	^ value! !
 
 
-!AccountTransaction methodsFor: 'as yet unclassified' stamp: 'ENC 5/17/2021 22:00:29'!
-xxx: partialBalance
+!AccountTransaction methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:20'!
+addValueTo: aPartialBalance
 
 	self subclassResponsibility.! !
+
+
+!AccountTransaction methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:21:52'!
+initializeFor: aValue
+	
+	value := aValue ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'AccountTransaction class' category: 'Portfolio-Ejercicio'!
 AccountTransaction class
 	instanceVariableNames: ''!
+
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'ENC 5/24/2021 23:23:04'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
 
 !AccountTransaction class methodsFor: 'instance creation' stamp: 'NR 10/17/2019 03:22:00'!
 register: aValue on: account
@@ -401,74 +351,28 @@ register: aValue on: account
 
 !classDefinition: #Deposit category: 'Portfolio-Ejercicio'!
 AccountTransaction subclass: #Deposit
-	instanceVariableNames: 'value'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Deposit methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:45'!
-initializeFor: aValue
+!Deposit methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:07'!
+addValueTo: aPartialBalance
 
-	value := aValue ! !
-
-
-!Deposit methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:38'!
-value
-
-	^ value! !
-
-
-!Deposit methodsFor: 'as yet unclassified' stamp: 'ENC 5/17/2021 22:00:47'!
-xxx: partialBalance
-
-	^ partialBalance + value! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Deposit class' category: 'Portfolio-Ejercicio'!
-Deposit class
-	instanceVariableNames: ''!
-
-!Deposit class methodsFor: 'instance creation' stamp: 'HernanWilkinson 7/13/2011 18:38'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
+	^ aPartialBalance + value! !
 
 
 !classDefinition: #Withdraw category: 'Portfolio-Ejercicio'!
 AccountTransaction subclass: #Withdraw
-	instanceVariableNames: 'value'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Withdraw methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:46'!
-initializeFor: aValue
+!Withdraw methodsFor: 'balance' stamp: 'ENC 5/24/2021 22:50:14'!
+addValueTo: aPartialBalance
 
-	value := aValue ! !
-
-
-!Withdraw methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:33'!
-value
-
-	^ value! !
-
-
-!Withdraw methodsFor: 'as yet unclassified' stamp: 'ENC 5/17/2021 22:00:54'!
-xxx: partialBalance
-
-	^ partialBalance - value! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Withdraw class' category: 'Portfolio-Ejercicio'!
-Withdraw class
-	instanceVariableNames: ''!
-
-!Withdraw class methodsFor: 'instance creation' stamp: 'HernanWilkinson 7/13/2011 18:33'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
+	^ aPartialBalance - value! !
 
 
 !classDefinition: #FinantialAsset category: 'Portfolio-Ejercicio'!
@@ -478,34 +382,40 @@ Object subclass: #FinantialAsset
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!FinantialAsset methodsFor: 'balance' stamp: 'MS 5/23/2021 23:32:12'!
-balance
-	self subclassResponsibility ! !
-
-
-!FinantialAsset methodsFor: 'initialization' stamp: 'MS 5/23/2021 23:33:16'!
+!FinantialAsset methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:06:31'!
 initialize
+
 	self subclassResponsibility ! !
 
-!FinantialAsset methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:40:21'!
+!FinantialAsset methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:06:34'!
 registerAsParent: aPortfolio
+
 	self subclassResponsibility ! !
 
 
-!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:32:50'!
+!FinantialAsset methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:53'!
+balance
+
+	self subclassResponsibility ! !
+
+!FinantialAsset methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:38'!
 hasAssociated: aFinantialAsset
+
 	self subclassResponsibility ! !
 
-!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:05'!
+!FinantialAsset methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:42'!
 hasRegistered: aTransaction
+
 	self subclassResponsibility ! !
 
-!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:27'!
+!FinantialAsset methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:45'!
 register: aFinantialAsset
+
 	self subclassResponsibility ! !
 
-!FinantialAsset methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:33:34'!
+!FinantialAsset methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:49'!
 transactions
+
 	self subclassResponsibility ! !
 
 
@@ -516,81 +426,92 @@ FinantialAsset subclass: #Portfolio
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'balance' stamp: 'MS 5/23/2021 23:17:21'!
-balance
-	
-	^ finantialAssets sum: [ :aFinantialAsset | aFinantialAsset balance ] ifEmpty: [ 0 ].! !
-
-
 !Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 00:18:25'!
 initialize
 	
 	finantialAssets := 	OrderedCollection new.
 	state := PortfolioStateRoot new.! !
 
-!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:06:50'!
+!Portfolio methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:05:01'!
 registerAsParent: aPortfolio
+
 	state register: aPortfolio asNewParentOf: self.! !
 
-!Portfolio methodsFor: 'initialization' stamp: 'MS 5/24/2021 17:05:23'!
+!Portfolio methodsFor: 'initialization' stamp: 'ENC 5/24/2021 23:04:54'!
 subportfolioOf: aParentPortfolio
+
 	state := PortfolioStateSubPortfolio withParent: aParentPortfolio.
 	! !
 
 
-!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 16:58:26'!
+!Portfolio methodsFor: 'operations - private' stamp: 'ENC 5/25/2021 15:32:04'!
+detectIfAny: aBlock
+	
+	finantialAssets detect: [ :finantialAsset | aBlock value: finantialAsset ] 
+	ifFound: [ :foundFinantialAsset | ^ true ] 
+	ifNone: [ ^ false ].! !
+
+!Portfolio methodsFor: 'operations - private' stamp: 'ENC 5/24/2021 23:05:27'!
 hasAssociated: aFinantialAsset in: parents
 
-	parents do: [ :aParent | (aParent hasParentAssociatedWith: aFinantialAsset) ifTrue: [^true]].
+	parents do: [ :aParent | (aParent hasParentAssociatedWith: aFinantialAsset) ifTrue: [ ^true ] ].
 	
-	^false
+	^ false.
 	! !
 
-!Portfolio methodsFor: 'finantial assets - private' stamp: 'MS 5/24/2021 15:48:03'!
+!Portfolio methodsFor: 'operations - private' stamp: 'ENC 5/25/2021 15:31:16'!
 hasParentAssociatedWith: aFinantialAsset
 
-	^ state parentOf: self hasAssociated: aFinantialAsset.! !
+	^ state checkIf: aFinantialAsset isAssociatedInParentsOf: self.! !
+
+!Portfolio methodsFor: 'operations - private' stamp: 'ENC 5/25/2021 16:02:32'!
+transactionsForPortfolio
+	
+	^ self transactions! !
 
 
-!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:48'!
+!Portfolio methodsFor: 'operations' stamp: 'MS 5/23/2021 23:17:21'!
+balance
+	
+	^ finantialAssets sum: [ :aFinantialAsset | aFinantialAsset balance ] ifEmpty: [ 0 ].! !
+
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:46:11'!
 checkInnerFinantialAssetsAssociatedWith: aPortfolio
 	
-	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset].! !
+	^ finantialAssets do: [ :aFinantialAsset | aPortfolio hasAssociated: aFinantialAsset ].! !
 
-!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:21'!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:44:23'!
 hasAssociated: anotherFinantialAsset
+
+	(finantialAssets includes: anotherFinantialAsset) ifTrue: [ ^ self error: self class errorAlreadyRegistered ].
 
 	anotherFinantialAsset checkInnerFinantialAssetsAssociatedWith: self.
 	
-	(finantialAssets includes: anotherFinantialAsset) ifTrue: [^ self error: self class errorAlreadyRegistered ].
-	
-	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ] ifFound: [ :foundAsset | ^ true ] ifNone: [ ^false ].! !
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasAssociated: anotherFinantialAsset ].! !
 
-!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:18:09'!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:39:28'!
 hasRegistered: aTransaction
 	
-	finantialAssets detect: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ] 
-	ifFound: [ :foundTransaction | ^ true ] 
-	ifNone: [ ^false ].! !
+	^ self detectIfAny: [ :aFinantialAsset | aFinantialAsset hasRegistered: aTransaction ].! !
 
-!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:50:17'!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 15:31:16'!
 register: aFinantialAsset 
 
-	state parentOf: self hasAssociated: aFinantialAsset.
+	state checkIf: aFinantialAsset isAssociatedInParentsOf: self.
 	
 	aFinantialAsset registerAsParent: self.
 	finantialAssets add: aFinantialAsset.! !
 
-!Portfolio methodsFor: 'finantial assets' stamp: 'MS 5/23/2021 23:18:26'!
+!Portfolio methodsFor: 'operations' stamp: 'ENC 5/25/2021 16:04:54'!
 transactions
 	
 	| transactions |
 	
 	transactions := OrderedCollection new.	
 	
-	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactions ].
+	finantialAssets do: [ :aFinantialAsset | transactions := transactions, aFinantialAsset transactionsForPortfolio ].
 	
-	^ transactions .! !
+	^ transactions.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -602,12 +523,6 @@ Portfolio class
 errorAlreadyRegistered
 
 	^ 'Ya se encuentra registrado en el portfolio'! !
-
-
-!Portfolio class methodsFor: 'instance creation' stamp: 'ENC 5/17/2021 21:49:36'!
-create
-
-	^ self new initialize.! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
@@ -627,44 +542,47 @@ registerAsParent: aPortfolio
 ! !
 
 
-!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 16:49:56'!
-checkInnerFinantialAssetsAssociatedWith: aPortfolio! !
+!ReceptiveAccount methodsFor: 'operations - private' stamp: 'ENC 5/25/2021 16:01:56'!
+transactionsForPortfolio 
 
-!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'MS 5/24/2021 00:00:01'!
-hasAssociated: aReceptiveAccount
-
-	^ self = aReceptiveAccount ! !
-
-!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'NR 10/17/2019 03:28:43'!
-hasRegistered: aTransaction
-
-	^ transactions includes: aTransaction 
-! !
-
-!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'HernanWilkinson 7/13/2011 18:37'!
-register: aTransaction
-
-	transactions add: aTransaction 
-! !
-
-!ReceptiveAccount methodsFor: 'finantial assets' stamp: 'HernanWilkinson 7/13/2011 18:37'!
-transactions 
-
-	^ transactions copy! !
+	^ transactions! !
 
 
-!ReceptiveAccount methodsFor: 'balance' stamp: 'ENC 5/17/2021 22:00:09'!
+!ReceptiveAccount methodsFor: 'operations' stamp: 'ENC 5/24/2021 23:06:10'!
 balance
 
 	| partialBalance |
 	
 	partialBalance := 0.
 	
-	transactions do: [ :aTransaction | 
-		partialBalance := aTransaction xxx: partialBalance.
-	 ].
+	transactions do: [ :aTransaction | partialBalance := aTransaction addValueTo: partialBalance ].
 	
 	^ partialBalance! !
+
+!ReceptiveAccount methodsFor: 'operations' stamp: 'MS 5/24/2021 16:49:56'!
+checkInnerFinantialAssetsAssociatedWith: aPortfolio! !
+
+!ReceptiveAccount methodsFor: 'operations' stamp: 'MS 5/24/2021 00:00:01'!
+hasAssociated: aReceptiveAccount
+
+	^ self = aReceptiveAccount ! !
+
+!ReceptiveAccount methodsFor: 'operations' stamp: 'NR 10/17/2019 03:28:43'!
+hasRegistered: aTransaction
+
+	^ transactions includes: aTransaction 
+! !
+
+!ReceptiveAccount methodsFor: 'operations' stamp: 'HernanWilkinson 7/13/2011 18:37'!
+register: aTransaction
+
+	transactions add: aTransaction 
+! !
+
+!ReceptiveAccount methodsFor: 'operations' stamp: 'HernanWilkinson 7/13/2011 18:37'!
+transactions 
+
+	^ transactions copy! !
 
 
 !classDefinition: #PortfolioState category: 'Portfolio-Ejercicio'!
@@ -674,10 +592,15 @@ Object subclass: #PortfolioState
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioState methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:55:40'!
-parentOf: aPortfolio hasAssociated: aFinantialAsset
+!PortfolioState methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16'!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
 
 	self subclassResponsibility ! !
+
+!PortfolioState methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:07:40'!
+register: aParentPortfolio asNewParentOf: aPortfolio
+
+	self subclassResponsibility! !
 
 
 !classDefinition: #PortfolioStateRoot category: 'Portfolio-Ejercicio'!
@@ -687,13 +610,14 @@ PortfolioState subclass: #PortfolioStateRoot
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 00:44:14'!
-parentOf: aPortfolio hasAssociated: aFinantialAsset
+!PortfolioStateRoot methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16'!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
 
 	^ aPortfolio hasAssociated: aFinantialAsset.! !
 
-!PortfolioStateRoot methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:04:46'!
+!PortfolioStateRoot methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:08:25'!
 register: aParentPortfolio asNewParentOf: aPortfolio
+
 	aPortfolio subportfolioOf: aParentPortfolio! !
 
 
@@ -711,13 +635,14 @@ initializeWithParent: aPortfolio
 	parents add: aPortfolio.! !
 
 
-!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 16:55:30'!
-parentOf: aPortfolio hasAssociated: aFinantialAsset
+!PortfolioStateSubPortfolio methodsFor: 'parenting' stamp: 'ENC 5/25/2021 15:31:16'!
+checkIf: aFinantialAsset isAssociatedInParentsOf: aPortfolio
 
 	^ aPortfolio hasAssociated: aFinantialAsset in: parents.! !
 
-!PortfolioStateSubPortfolio methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 17:06:19'!
+!PortfolioStateSubPortfolio methodsFor: 'parenting' stamp: 'ENC 5/24/2021 23:08:32'!
 register: aParentPortfolio asNewParentOf: aPortfolio
+
 	parents add: aParentPortfolio.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
@@ -726,6 +651,7 @@ register: aParentPortfolio asNewParentOf: aPortfolio
 PortfolioStateSubPortfolio class
 	instanceVariableNames: ''!
 
-!PortfolioStateSubPortfolio class methodsFor: 'as yet unclassified' stamp: 'MS 5/24/2021 15:58:02'!
-withParent: aPortfolio
-	^ self new initializeWithParent: aPortfolio.! !
+!PortfolioStateSubPortfolio class methodsFor: 'class initialization' stamp: 'ENC 5/24/2021 23:15:38'!
+withParent: aParentPortfolio
+
+	^ self new initializeWithParent: aParentPortfolio.! !
