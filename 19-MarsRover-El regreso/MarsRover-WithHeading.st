@@ -1,12 +1,12 @@
-!classDefinition: #LogTest category: 'MarsRover-WithHeading'!
-TestCase subclass: #LogTest
+!classDefinition: #MarsRoverObserverTest category: 'MarsRover-WithHeading'!
+TestCase subclass: #MarsRoverObserverTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:23:34'!
-test01
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:22:44'!
+test01checkNorthAndSouthMovementsAreLogged
 	| marsRover log |
 	
 	marsRover := MarsRover at: 1@1 heading: #North.
@@ -20,8 +20,8 @@ test01
 	self assert: '1@1' equals: log info second.
 ! !
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:30:53'!
-test02
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:23:40'!
+test02checkEastAndWestMovementsAreLogged
 	| marsRover log |
 	
 	marsRover := MarsRover at: 1@1 heading: #East.
@@ -35,8 +35,8 @@ test02
 	self assert: '1@1' equals: log info second.
 ! !
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:31:04'!
-test03
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:24:06'!
+test03checkRotationsLogHeadingChange
 	| marsRover log |
 	
 	marsRover := MarsRover at: 1@1 heading: #North.
@@ -52,8 +52,8 @@ test03
 	self assert: 'North' equals: log info fourth.
 ! !
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:40:20'!
-test04
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:25:00'!
+test04checkWindowShowPositionWhenMovingNorthAndSouth
 	| marsRover window |
 	
 	marsRover := MarsRover at: 1@1 heading: #North.
@@ -69,8 +69,8 @@ test04
 
 ! !
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:40:26'!
-test05
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:25:22'!
+test05checkWindowShowPositionWhenMovingEastAndWest
 	| marsRover window |
 	
 	marsRover := MarsRover at: 1@1 heading: #East.
@@ -84,8 +84,8 @@ test05
 	marsRover process: 'b'. 
 	self assert: '1@1' equals: window info.! !
 
-!LogTest methodsFor: 'as yet unclassified' stamp: 'ENC 6/5/2021 23:33:15'!
-test06
+!MarsRoverObserverTest methodsFor: 'as yet unclassified' stamp: 'MS 6/7/2021 13:25:38'!
+test06checkWindowShowsCurrentHeading
 	| marsRover window |
 	
 	marsRover := MarsRover at: 1@1 heading: #North.
