@@ -1,0 +1,615 @@
+
+
+----STARTUP---- (17 June 2021 20:39:43) as /Users/ecerdeira/Desktop/ST limpio/CuisUniversity-4532.image!
+
+
+!classRemoval: #TestObjectFactory stamp: 'ENC 6/17/2021 20:39:58'!
+Object subclass: #TestObjectFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #MPInnerInterfaceSimulatorValidCard stamp: 'ENC 6/17/2021 20:39:58'!
+MPInnerInterfaceSimulator subclass: #MPInnerInterfaceSimulatorValidCard
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #MPInnerInterfaceSimulatorStolenCard stamp: 'ENC 6/17/2021 20:39:58'!
+MPInnerInterfaceSimulator subclass: #MPInnerInterfaceSimulatorStolenCard
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #MPInnerInterfaceSimulatorInsufficientAmountCard stamp: 'ENC 6/17/2021 20:39:58'!
+MPInnerInterfaceSimulator subclass: #MPInnerInterfaceSimulatorInsufficientAmountCard
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #MPInnerInterfaceSimulatorFalseCard stamp: 'ENC 6/17/2021 20:39:58'!
+MPInnerInterfaceSimulator subclass: #MPInnerInterfaceSimulatorFalseCard
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #MPInnerInterfaceSimulator stamp: 'ENC 6/17/2021 20:39:58'!
+Object subclass: #MPInnerInterfaceSimulator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CreditCard stamp: 'ENC 6/17/2021 20:39:59'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'owner number date'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cashier stamp: 'ENC 6/17/2021 20:39:59'!
+Object subclass: #Cashier
+	instanceVariableNames: 'merchantProcessorInterface'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #Cart stamp: 'ENC 6/17/2021 20:39:59'!
+Object subclass: #Cart
+	instanceVariableNames: 'catalog items'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CashierTest stamp: 'ENC 6/17/2021 20:39:59'!
+TestCase subclass: #CashierTest
+	instanceVariableNames: 'testingObjectFactory date mpInnerInterfaceSimulatorValidCard mpInnerInterfaceSimulatorFalseCard mpInnerInterfaceSimulatorStolenCard mpInnerInterfaceSimulatorInsufficientAmountCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #CartTest stamp: 'ENC 6/17/2021 20:39:59'!
+TestCase subclass: #CartTest
+	instanceVariableNames: 'testingObjectFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of /Users/ecerdeira/Desktop/TusLibros-33.st----!
+
+TestCase subclass: #InnerUserInterfaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InnerUserInterfaceTest category: 'TusLibros' stamp: 'ENC 6/17/2021 20:41:45'!
+TestCase subclass: #InnerUserInterfaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #InnerUserInterface
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InnerUserInterface category: 'TusLibros' stamp: 'ENC 6/17/2021 20:41:55'!
+Object subclass: #InnerUserInterface
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'ENC 6/17/2021 20:42:13'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'ENC 6/17/2021 20:42:14'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 20:46:57'!
+test01cannotCreateACartWithInvalidUser
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface new.
+	userID := 'invalidUser'.
+	userPassword := '123'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: InnerUserInterface errorInvalidUsernameOrPassword.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:47:04'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:47:13'!
+ERROR!
+!InnerUserInterface class methodsFor: 'error description' stamp: 'ENC 6/17/2021 20:47:37'!
+errorInvalidUsernameOrPassword
+	self shouldBeImplemented.! !
+!InnerUserInterface class methodsFor: 'error description' stamp: 'ENC 6/17/2021 20:48:02' prior: 50924074!
+errorInvalidUsernameOrPassword
+	
+	^ 'El usuario o contraseña ingresados son inválidos'.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:48:03'!
+FAILURE!
+!InnerUserInterfaceTest methodsFor: 'assertions' stamp: 'ENC 6/17/2021 20:48:24' overrides: 16927375!
+assert: aFalse description: aBlockClosure 
+	self shouldBeImplemented.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/17/2021 20:49:29'!
+createCartForUser: userID withPassword: userPassword
+
+	self signalInvalidUsernameOrPassword.! !
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/17/2021 20:50:14'!
+invalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword ! !
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/17/2021 20:50:39'!
+signalInvalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword ! !
+
+!methodRemoval: InnerUserInterface #invalidUsernameOrPassword stamp: 'ENC 6/17/2021 20:50:41'!
+invalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:51:03'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:51:03'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:51:53'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:54:25'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:54:25'!
+ERROR!
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/17/2021 20:55:13' prior: 50924107!
+signalInvalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword ! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:58:49'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:58:49'!
+ERROR!
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/17/2021 20:59:15' prior: 50924137!
+signalInvalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword ! !
+!InnerUserInterface methodsFor: 'initialization' stamp: 'ENC 6/17/2021 20:59:23' overrides: 16896425!
+initialize! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 20:59:39' prior: 50924053!
+test01cannotCreateACartWithInvalidUser
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface new.
+	userID := 'invalidUser'.
+	userPassword := '123'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: InnerUserInterface errorInvalidUsernameOrPassword.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 20:59:42'!
+ERROR!
+
+InnerUserInterface errorInvalidUsernameOrPassword!
+
+self class errorInvalidUsernameOrPassword !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:01:05'!
+ERROR!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/17/2021 21:01:27' prior: 50924095!
+createCartForUser: userID withPassword: userPassword
+
+	self error: self class errorInvalidUsernameOrPassword .! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:01:30'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:01:30'!
+ERROR!
+
+!methodRemoval: InnerUserInterfaceTest #assert:description: stamp: 'ENC 6/17/2021 21:01:58'!
+assert: aFalse description: aBlockClosure 
+	self shouldBeImplemented.!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:02:05'!
+PASSED!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/17/2021 21:02:14' prior: 50924185!
+createCartForUser: userID withPassword: userPassword
+
+	self signalInvalidUsernameOrPassword.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:02:18'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:05:37'!
+test02cannotCreateACartWithInvalidPassword
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'invalidPassword'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: InnerUserInterface errorInvalidUsernameOrPassword.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:05:47' prior: 50924161!
+test01cannotCreateACartWithInvalidUser
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface new.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: InnerUserInterface errorInvalidUsernameOrPassword.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:06:40'!
+test03createdCartIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:08:03' prior: 50924246!
+test03createdCartIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).! !
+!InnerUserInterface class methodsFor: 'instance creation' stamp: 'ENC 6/17/2021 21:13:19'!
+with: aCredentialValidator
+
+	^ self new initializeWith: aCredentialValidator.! !
+
+!classDefinition: #InnerUserInterface category: 'TusLibros' stamp: 'ENC 6/17/2021 21:13:46'!
+Object subclass: #InnerUserInterface
+	instanceVariableNames: 'credentialValidator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InnerUserInterface methodsFor: 'initialization' stamp: 'ENC 6/17/2021 21:13:44'!
+initializeWith: aCredentialValidator
+
+	credentialValidator := aCredentialValidator.! !
+
+!methodRemoval: InnerUserInterface #initialize stamp: 'ENC 6/17/2021 21:13:51'!
+initialize!
+
+!testRun: #InnerUserInterfaceTest #test02cannotCreateACartWithInvalidPassword stamp: 'ENC 6/17/2021 21:14:06'!
+PASSED!
+
+Object subclass: #CredentialValidator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CredentialValidator category: 'TusLibros' stamp: 'ENC 6/17/2021 21:14:38'!
+Object subclass: #CredentialValidator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRenamed: #CredentialValidator as: #CredentialValidatorSimulator stamp: 'ENC 6/17/2021 21:15:01'!
+Smalltalk renameClassNamed: #CredentialValidator as: #CredentialValidatorSimulator!
+!CredentialValidatorSimulator methodsFor: 'validate' stamp: 'ENC 6/17/2021 21:15:51'!
+logWith: aUsername and: aPassword
+
+	self subclassResponsibility ! !
+
+CredentialValidatorSimulator subclass: #CredentialValidatorSimulatorInvalidCredentials
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CredentialValidatorSimulatorInvalidCredentials category: 'TusLibros' stamp: 'ENC 6/17/2021 21:16:21'!
+CredentialValidatorSimulator subclass: #CredentialValidatorSimulatorInvalidCredentials
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+CredentialValidatorSimulator subclass: #CredentialValidatorSimulatorValidCredentials
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CredentialValidatorSimulatorValidCredentials category: 'TusLibros' stamp: 'ENC 6/17/2021 21:16:26'!
+CredentialValidatorSimulator subclass: #CredentialValidatorSimulatorValidCredentials
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CredentialValidatorSimulatorInvalidCredentials methodsFor: 'log' stamp: 'ENC 6/17/2021 21:17:30' overrides: 50924313!
+logWith: aUsername and: aPassword
+
+	self error: self class errorInvalidUsernameOrPassword ! !
+!CredentialValidatorSimulatorValidCredentials methodsFor: 'log' stamp: 'ENC 6/17/2021 21:17:56'!
+logWith: aUsername with: aPassword
+
+	! !
+!CredentialValidatorSimulator class methodsFor: 'error description' stamp: 'ENC 6/17/2021 21:18:38'!
+errorInvalidUsernameOrPassword
+
+	^ ''! !
+!CredentialValidatorSimulator class methodsFor: 'error description' stamp: 'ENC 6/17/2021 21:18:49' prior: 50924361!
+errorInvalidUsernameOrPassword
+
+	^ 'El usuario o contraseña ingresados son inválidos'! !
+
+!methodRemoval: InnerUserInterface class #errorInvalidUsernameOrPassword stamp: 'ENC 6/17/2021 21:18:55'!
+errorInvalidUsernameOrPassword
+	
+	^ 'El usuario o contraseña ingresados son inválidos'.!
+
+!methodRemoval: InnerUserInterface #signalInvalidUsernameOrPassword stamp: 'ENC 6/17/2021 21:19:01'!
+signalInvalidUsernameOrPassword
+
+	self error: self class errorInvalidUsernameOrPassword !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/17/2021 21:19:33' prior: 50924208!
+createCartForUser: userID withPassword: userPassword
+
+	credentialValidator logWith: userID and: userPassword.! !
+!CredentialValidatorSimulatorValidCredentials methodsFor: 'log' stamp: 'ENC 6/17/2021 21:19:45' overrides: 50924313!
+logWith: aUsername and: aPassword
+
+	! !
+
+!methodRemoval: CredentialValidatorSimulatorValidCredentials #logWith:with: stamp: 'ENC 6/17/2021 21:19:45'!
+logWith: aUsername with: aPassword
+
+	!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:19:51'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test02cannotCreateACartWithInvalidPassword stamp: 'ENC 6/17/2021 21:19:51'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test03createdCartIsEmpty stamp: 'ENC 6/17/2021 21:19:51'!
+ERROR!
+
+!classDefinition: #InnerUserInterfaceTest category: 'TusLibros' stamp: 'ENC 6/17/2021 21:21:32'!
+TestCase subclass: #InnerUserInterfaceTest
+	instanceVariableNames: 'credentialValidatorValid'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InnerUserInterfaceTest category: 'TusLibros' stamp: 'ENC 6/17/2021 21:21:33'!
+TestCase subclass: #InnerUserInterfaceTest
+	instanceVariableNames: 'credentialValidatorValid credentialValidatorInvalid'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:21:31' overrides: 16927572!
+setUp
+
+	credentialValidatorValid := CredentialValidatorSimulatorValidCredentials new.
+	credentialValidatorInvalid := CredentialValidatorSimulatorInvalidCredentials new.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:22:18' prior: 50924232!
+test01cannotCreateACartWithInvalidUser
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface with: credentialValidatorInvalid.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
+
+!methodRemoval: InnerUserInterfaceTest #test02cannotCreateACartWithInvalidPassword stamp: 'ENC 6/17/2021 21:22:21'!
+test02cannotCreateACartWithInvalidPassword
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'invalidPassword'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: InnerUserInterface errorInvalidUsernameOrPassword.!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:22:30'!
+test01cannotCreateACartWithInvalidCredentials
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface with: credentialValidatorInvalid.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
+
+!methodRemoval: InnerUserInterfaceTest #test01cannotCreateACartWithInvalidUser stamp: 'ENC 6/17/2021 21:22:32'!
+test01cannotCreateACartWithInvalidUser
+
+	| interface userID userPassword |
+
+	interface := InnerUserInterface with: credentialValidatorInvalid.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:22:37'!
+test02createdCartIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).! !
+
+!methodRemoval: InnerUserInterfaceTest #test03createdCartIsEmpty stamp: 'ENC 6/17/2021 21:22:37'!
+test03createdCartIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:23:16'!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).! !
+
+!methodRemoval: InnerUserInterfaceTest #test02createdCartIsEmpty stamp: 'ENC 6/17/2021 21:23:17'!
+test02createdCartIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface new.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'ENC 6/17/2021 21:23:43'!
+PASSED!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/17/2021 21:24:07'!
+listCart: aCartID
+
+	^ OrderedCollection new.! !
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/17/2021 21:24:15'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/17/2021 21:24:15'!
+ERROR!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:24:31' prior: 50924524!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID isEmpty).! !
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/17/2021 21:25:43'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/17/2021 21:25:43'!
+ERROR!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/17/2021 21:25:59' prior: 50924566!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID) isEmpty.! !
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/17/2021 21:26:01'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'ENC 6/17/2021 21:26:02'!
+PASSED!
+
+----QUIT----(17 June 2021 21:45:53) CuisUniversity-4532.image priorSource: 18934146!
