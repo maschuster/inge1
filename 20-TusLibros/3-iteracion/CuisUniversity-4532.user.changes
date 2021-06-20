@@ -613,3 +613,957 @@ PASSED!
 PASSED!
 
 ----QUIT----(17 June 2021 21:45:53) CuisUniversity-4532.image priorSource: 18934146!
+
+----STARTUP---- (19 June 2021 22:36:10) as C:\Program Files (x86)\Smalltalk\windows64\CuisUniversity-4532.image!
+
+
+!classRemoval: #Carrito stamp: 'MS 6/19/2021 22:36:19'!
+Object subclass: #Carrito
+	instanceVariableNames: 'books'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classRemoval: #TestCarrito stamp: 'MS 6/19/2021 22:36:19'!
+TestCase subclass: #TestCarrito
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+----End fileIn of C:\Program Files (x86)\Smalltalk\windows64\TusLibros.st----!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 22:38:09'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 22:38:11'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 22:44:27'!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID) isEmpty.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 22:45:54' prior: 50862901!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID amount isbn |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	interface add: amount of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) isEmpty.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 22:46:25' prior: 50862915!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!classDefinition: #InnerUserInterfaceTest category: 'TusLibros' stamp: 'MS 6/19/2021 22:46:53'!
+TestCase subclass: #InnerUserInterfaceTest
+	instanceVariableNames: 'credentialValidatorValid credentialValidatorInvalid testObjectsFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 22:46:51' prior: 50862434 overrides: 16927572!
+setUp
+
+	credentialValidatorValid := CredentialValidatorSimulatorValidCredentials new.
+	credentialValidatorInvalid := CredentialValidatorSimulatorInvalidCredentials new.
+	testObjectsFactory := StoreTestObjectsFactory new.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 22:47:51' prior: 50862931!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn |
+
+	interface := InnerUserInterface with: credentialValidatorValid.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+!InnerUserInterface methodsFor: 'nil' stamp: 'MS 6/19/2021 22:48:27'!
+add: amountOfItems of: item toCart: cartID
+	! !
+
+Object subclass: #InnerUserInterface
+	instanceVariableNames: 'credentialValidator carts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InnerUserInterface category: 'TusLibros' stamp: 'MS 6/19/2021 22:50:02'!
+Object subclass: #InnerUserInterface
+	instanceVariableNames: 'credentialValidator carts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #InnerUserInterface category: 'TusLibros' stamp: 'MS 6/19/2021 22:56:29'!
+Object subclass: #InnerUserInterface
+	instanceVariableNames: 'credentialValidator carts catalog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 22:56:27' prior: 50862769!
+createCartForUser: userID withPassword: userPassword
+
+	credentialValidator logWith: userID and: userPassword.
+	
+	Cart acceptingItemsOf: catalog.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 22:57:37' prior: 50863009!
+createCartForUser: userID withPassword: userPassword
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts ! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 22:58:54' prior: 50863017!
+createCartForUser: userID withPassword: userPassword
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 22:59:28' prior: 50863027!
+createCartForUser: userID withPassword: userPassword
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 22:59:48' prior: 50863037!
+createCartForUser: userID withPassword: userPassword
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	^ cartID
+	
+	! !
+!InnerUserInterface class methodsFor: 'instance creation' stamp: 'MS 6/19/2021 23:15:40'!
+with: aCredentialValidator acceptingItemsOf: aCatalog
+
+	^ self new initializeWith: aCredentialValidator acceptingItemsOf: aCatalog.! !
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:16:02'!
+initializeWith: aCredentialValidator acceptingItemsOf: aCatalog
+
+	credentialValidator := aCredentialValidator.! !
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:16:06' prior: 50863066!
+initializeWith: aCredentialValidator acceptingItemsOf: aCatalog
+
+	credentialValidator := aCredentialValidator.
+	catalog := aCatalog.! !
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:16:13' prior: 50863073!
+initializeWith: aCredentialValidator acceptingItemsOf: aCatalog
+
+	credentialValidator := aCredentialValidator.
+	catalog := aCatalog.
+	carts := Dictionary new.! !
+
+!methodRemoval: InnerUserInterface #initializeWith: stamp: 'MS 6/19/2021 23:16:21'!
+initializeWith: aCredentialValidator
+
+	credentialValidator := aCredentialValidator.!
+
+!methodRemoval: InnerUserInterface class #with: stamp: 'MS 6/19/2021 23:16:25'!
+with: aCredentialValidator
+
+	^ self new initializeWith: aCredentialValidator.!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:17:25' prior: 50862442!
+test01cannotCreateACartWithInvalidCredentials
+
+	| interface userID userPassword aCatalog catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:17:27' prior: 50863100!
+test01cannotCreateACartWithInvalidCredentials
+
+	| interface userID userPassword catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog.
+	userID := 'invalidUser'.
+	userPassword := 'password'.
+
+	self 
+		should: [ interface createCartForUser: userID withPassword: userPassword ] 
+		raise: Error 
+		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:17:39' prior: 50862457!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface userID userPassword cartID catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID) isEmpty.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:17:48' prior: 50862967!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:18:06'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:18:08'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:18:08'!
+ERROR!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:18:21' prior: 50863136!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface userID userPassword cartID catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self assert: (interface listCart: cartID) isEmpty.! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:18:25' prior: 50863153!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:18:26'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:18:26'!
+ERROR!
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:18:52'!
+generateCartID
+	! !
+
+!classDefinition: #InnerUserInterface category: 'TusLibros' stamp: 'MS 6/19/2021 23:19:24'!
+Object subclass: #InnerUserInterface
+	instanceVariableNames: 'credentialValidator carts catalog lastId'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:19:24' prior: 50863228!
+generateCartID
+	lastId := lastId + 1.
+	
+	^ lastId.! !
+!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/19/2021 23:19:34' prior: 50863081!
+initializeWith: aCredentialValidator acceptingItemsOf: aCatalog
+
+	credentialValidator := aCredentialValidator.
+	catalog := aCatalog.
+	carts := Dictionary new.
+	lastId := 0.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:19:50'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:19:50'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:19:50'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:19:50'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:19:53'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:19:55'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:19:55'!
+FAILURE!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:20:26' prior: 50862775!
+listCart: aCartID
+
+	^ carts at: aCartID.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:20:28'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:20:28'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:20:28'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:20:28'!
+FAILURE!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:21:41' prior: 50862983!
+add: amountOfItems of: item toCart: cartID
+	
+	| cart |
+	cart := carts at: cartID.
+	
+	cart add: amountOfItems of: item.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:21:45' prior: 50863298!
+add: amountOfItems of: item toCart: cartID
+	
+	| cart |
+	
+	cart := carts at: cartID.
+	
+	cart add: amountOfItems of: item.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:21:48'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:21:48'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:21:48'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:21:51'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:21:51'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:21:51'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:21:59'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:23:56' prior: 50863201!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: (interface listCart: cartID) size equals: 1.
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:23:59'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:23:59'!
+ERROR!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:24:14' prior: 50863338!
+test03addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: ((interface listCart: cartID) size) equals: 1.
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:24:15'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:24:21'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:24:21'!
+ERROR!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:28:15' prior: 50863279!
+listCart: aCartID
+
+	^ (carts at: aCartID) items.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:28:48' prior: 50863398!
+listCart: aCartID
+
+	^ (carts at: aCartID) listItems.! !
+!Cart methodsFor: 'nil' stamp: 'MS 6/19/2021 23:29:10'!
+listItems
+	^items copy.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:29:42'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:29:42'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:29:42'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:29:52'!
+test04addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: ((interface listCart: cartID) size) equals: 1.
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:36:28'!
+test04cannotAddItemsToInvalidCart
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: ((interface listCart: cartID) size) equals: 1.
+	self assert: (interface listCart: cartID) includes: isbn.
+	! !
+
+!methodRemoval: InnerUserInterfaceTest #test04addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:36:28'!
+test04addingAnItemInCartIsListed
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	isbn := testObjectsFactory itemSellByTheStore.
+	
+	interface add: 1 of: isbn toCart: cartID.
+	
+	self assert: ((interface listCart: cartID) size) equals: 1.
+	self assert: (interface listCart: cartID) includes: isbn.
+	!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:36:46' prior: 50863443!
+test04cannotAddItemsToInvalidCart
+
+	| interface userID userPassword cartID isbn catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	
+	interface add: 1 of: isbn toCart: cartID.
+
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:36:55' prior: 50863486!
+test04cannotAddItemsToInvalidCart
+
+	| interface userID userPassword cartID catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	
+	interface add: 1 of: 'isbn' toCart: cartID.
+
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:37:58' prior: 50863502!
+test04cannotAddItemsToInvalidCart
+
+	| interface userID userPassword cartID catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	userID := 'validUser'.
+	userPassword := 'validPassword'.
+
+	cartID := interface createCartForUser: userID withPassword: userPassword.
+	
+	self should: [interface add: 1 of: 'isbn' toCart: cartID]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterface class methodsFor: 'error description' stamp: 'MS 6/19/2021 23:38:43'!
+invalidCartId
+	^ 'El Id no corresponde a un carrito válido.'! !
+!InnerUserInterface methodsFor: 'signaling' stamp: 'MS 6/19/2021 23:39:16'!
+signalInvalidCartId
+	^ self error: self class invalidCartId .! !
+!InnerUserInterface methodsFor: 'signaling' stamp: 'MS 6/19/2021 23:39:18' prior: 50863542!
+signalInvalidCartId
+	^ self error: self class invalidCartId.! !
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:20'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:21'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:39:40'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:39:40'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:39:40'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:40'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:40'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:39:44'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:39:44'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:39:44'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:44'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:39:44'!
+FAILURE!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:40:45' prior: 50863305!
+add: amountOfItems of: item toCart: cartID
+	
+	| cart |
+	
+	(carts includesKey: cartID) ifFalse: [^ self signalInvalidCartId ].
+	
+	cart := carts at: cartID.
+	cart add: amountOfItems of: item.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:40:47'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:40:47'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:40:47'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:40:47'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:40:47'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:41:07'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:41:07'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:41:07'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:41:07'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:41:07'!
+FAILURE!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:42:31' prior: 50863518!
+test04cannotAddItemsToInvalidCart
+
+	| interface userID userPassword catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface add: 1 of: 'isbn' toCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:42:46' prior: 50863640!
+test04cannotAddItemsToInvalidCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface add: 1 of: 'isbn' toCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:42:48'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:43:03'!
+test05cannotListItemsOfInvalidCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface add: 1 of: 'isbn' toCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:43:12' prior: 50863671!
+test05cannotListItemsOfInvalidCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface add: 1 of: 'isbn' toCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:43:48' prior: 50863685!
+test05cannotListItemsOfInvalidCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface listCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:44:05' prior: 50863403!
+listCart: aCartID
+
+	(carts includesKey: aCartID) ifFalse: [^ self signalInvalidCartId ].
+	
+	^ (carts at: aCartID) listItems.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:44:14' prior: 50863595!
+add: amountOfItems of: item toCart: aCartID
+	
+	| cart |
+	
+	(carts includesKey: aCartID) ifFalse: [^ self signalInvalidCartId ].
+	
+	cart := carts at: aCartID.
+	cart add: amountOfItems of: item.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:44:45' prior: 50863712!
+listCart: aCartID
+	
+	self assertValidID: aCartID.
+	
+	^ (carts at: aCartID) listItems.! !
+!InnerUserInterface methodsFor: 'asserting' stamp: 'MS 6/19/2021 23:45:12'!
+assertValidId: aCartID
+	(carts includesKey: aCartID) ifFalse: [^ self signalInvalidCartId ].! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:45:27' prior: 50863728!
+listCart: aCartID
+	
+	self assertValidCartID: aCartID.
+	
+	^ (carts at: aCartID) listItems.! !
+!InnerUserInterface methodsFor: 'asserting' stamp: 'MS 6/19/2021 23:45:37'!
+assertValidCartID: aCartID
+	(carts includesKey: aCartID) ifFalse: [^ self signalInvalidCartId ].! !
+
+!methodRemoval: InnerUserInterface #assertValidId: stamp: 'MS 6/19/2021 23:45:37'!
+assertValidId: aCartID
+	(carts includesKey: aCartID) ifFalse: [^ self signalInvalidCartId ].!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:45:54' prior: 50863719!
+add: amountOfItems of: item toCart: aCartID
+	
+	| cart |
+	
+	self assertValidCartID: aCartID.
+	
+	cart := carts at: aCartID.
+	cart add: amountOfItems of: item.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/19/2021 23:45:55'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/19/2021 23:45:55'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/19/2021 23:45:56'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/19/2021 23:45:56'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test05cannotListItemsOfInvalidCart stamp: 'MS 6/19/2021 23:45:56'!
+PASSED!
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:50:08'!
+test06cannotAddItemsToExpiredCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface listCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/19/2021 23:50:23'!
+test07cannotListItemsOfExpiredCart
+
+	| interface catalog |
+
+	catalog := testObjectsFactory defaultCatalog.
+	
+	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog.
+	
+	self should: [interface listCart: 1]
+	 raise: Error
+	withMessageText: InnerUserInterface invalidCartId.
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:56:35'!
+add: amountOfItems of: item toCart: aCartID at: aTime
+	
+	| cart |
+	
+	self assertValidCartID: aCartID.
+	
+	cart := carts at: aCartID.
+	cart add: amountOfItems of: item.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:56:44'!
+createCartForUser: userID withPassword: userPassword atTime: aTime
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	^ cartID
+	
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:56:55'!
+createCartForUser: userID withPassword: userPassword at: aTime
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	^ cartID
+	
+	! !
+
+!methodRemoval: InnerUserInterface #createCartForUser:withPassword:atTime: stamp: 'MS 6/19/2021 23:56:55'!
+createCartForUser: userID withPassword: userPassword atTime: aTime
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	^ cartID
+	
+	!
+!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/19/2021 23:57:06'!
+listCart: aCartID at: aTime
+	
+	self assertValidCartID: aCartID.
+	
+	^ (carts at: aCartID) listItems.! !
+
+!methodRemoval: InnerUserInterface #listCart: stamp: 'MS 6/19/2021 23:57:09'!
+listCart: aCartID
+	
+	self assertValidCartID: aCartID.
+	
+	^ (carts at: aCartID) listItems.!
+
+!methodRemoval: InnerUserInterface #createCartForUser:withPassword: stamp: 'MS 6/19/2021 23:57:12'!
+createCartForUser: userID withPassword: userPassword
+
+	| cart cartID |
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: cart.
+	
+	^ cartID
+	
+	!
+
+!methodRemoval: InnerUserInterface #add:of:toCart: stamp: 'MS 6/19/2021 23:57:14'!
+add: amountOfItems of: item toCart: aCartID
+	
+	| cart |
+	
+	self assertValidCartID: aCartID.
+	
+	cart := carts at: aCartID.
+	cart add: amountOfItems of: item.!
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'MS 6/20/2021 00:13:48'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'MS 6/20/2021 00:13:48'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'MS 6/20/2021 00:13:48'!
+ERROR!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'MS 6/20/2021 00:13:48'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test05cannotListItemsOfInvalidCart stamp: 'MS 6/20/2021 00:13:48'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test06cannotAddItemsToExpiredCart stamp: 'MS 6/20/2021 00:13:48'!
+FAILURE!
+
+!testRun: #InnerUserInterfaceTest #test07cannotListItemsOfExpiredCart stamp: 'MS 6/20/2021 00:13:48'!
+FAILURE!
+
+----QUIT----(20 June 2021 00:14:06) CuisUniversity-4532.image priorSource: 16975528!
