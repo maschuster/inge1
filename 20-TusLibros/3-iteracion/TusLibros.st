@@ -720,17 +720,16 @@ Object subclass: #InnerUserInterface
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!InnerUserInterface methodsFor: 'checkout' stamp: 'ENC 6/24/2021 02:45:05'!
+!InnerUserInterface methodsFor: 'checkout' stamp: 'ENC 6/24/2021 11:17:11'!
 checkout: aCartID at: aTime withCard: aCardNumber from: aCardOwner expiringOn: aDate
 	
-	| creditCard salesBook userID cart cashier cartTime |
+	| creditCard salesBook userID cart cashier |
 	
 	creditCard := CreditCard number: aCardNumber from: aCardOwner expiringOn: aDate.
 	
 	self assertCartID: aCartID isValidAt: aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
 	
-	cartTime := self lastTimeUsedOf: aCartID.
-	cartTime := aTime.
 	cart := self cartOf: aCartID.
 	userID := self userIdOf: aCartID.
 	
@@ -773,15 +772,13 @@ userIdOf: aCartID
 	^ (carts at: aCartID) at: 3.! !
 
 
-!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/23/2021 23:02:57'!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:16:28'!
 add: amountOfItems of: item toCart: aCartID at: aTime
 	
-	| cart cartTime |
+	| cart |
 	
 	self assertCartID: aCartID isValidAt: aTime.
-	
-	cartTime := self lastTimeUsedOf: aCartID.
-	cartTime := aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
 	
 	cart := self cartOf: aCartID.
 	cart add: amountOfItems of: item.
@@ -789,10 +786,11 @@ add: amountOfItems of: item toCart: aCartID at: aTime
 	
 	! !
 
-!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/23/2021 23:11:45'!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:16:05'!
 createCartForUser: userID withPassword: userPassword at: aTime
 
 	| cart cartID |
+	
 	credentialValidator logWith: userID and: userPassword.
 	
 	cart := Cart acceptingItemsOf: catalog.
@@ -805,46 +803,56 @@ createCartForUser: userID withPassword: userPassword at: aTime
 	
 	! !
 
-!InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/23/2021 23:04:22'!
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:15:55'!
 listCart: aCartID at: aTime
-	
-	| cartTime |
-	
+		
 	self assertCartID: aCartID isValidAt: aTime.
-	
-	cartTime := self lastTimeUsedOf: aCartID.
-	cartTime := aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
 	
 	^ (self cartOf: aCartID) listItems.! !
 
-
-!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/23/2021 23:46:46'!
-generateCartID
-	lastCartId := lastCartId + 1.
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:15:07'!
+updateLasTimeUsedFor: aCartID with: aTime
+		
+	(carts at: aCartID) at: 2 put: aTime.
 	
-	^ lastCartId.! !
-
-!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/23/2021 23:47:59'!
-generateTransactionID
-	lastTransactionId := lastTransactionId + 1.
 	
-	^ lastTransactionId.! !
+	! !
 
-!InnerUserInterface methodsFor: 'initialization' stamp: 'MS 6/23/2021 23:47:29'!
+
+!InnerUserInterface methodsFor: 'initialization' stamp: 'ENC 6/24/2021 11:12:24'!
 initializeWith: aCredentialValidator acceptingItemsOf: aCatalog throughtMP: aMerchantProcessor.
 
 	credentialValidator := aCredentialValidator.
 	catalog := aCatalog.
 	merchantProcessor  := aMerchantProcessor.
+	
 	carts := Dictionary new.
 	salesBooks := Dictionary new.
+	
 	lastCartId := 0.
 	lastTransactionId := 0.! !
 
 
-!InnerUserInterface methodsFor: 'signaling' stamp: 'MS 6/19/2021 23:39:18'!
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/24/2021 11:12:31'!
 signalInvalidCartId
+
 	^ self error: self class invalidCartId.! !
+
+
+!InnerUserInterface methodsFor: 'id generation' stamp: 'ENC 6/24/2021 11:12:50'!
+generateCartID
+
+	lastCartId := lastCartId + 1.
+	
+	^ lastCartId.! !
+
+!InnerUserInterface methodsFor: 'id generation' stamp: 'ENC 6/24/2021 11:13:01'!
+generateTransactionID
+
+	lastTransactionId := lastTransactionId + 1.
+	
+	^ lastTransactionId.! !
 
 
 !InnerUserInterface methodsFor: 'asserting' stamp: 'MS 6/23/2021 23:05:38'!

@@ -8841,3 +8841,138 @@ PASSED!
 PASSED!
 
 ----QUIT----(24 June 2021 02:52:31) CuisUniversity-4532.image priorSource: 18975754!
+
+----STARTUP---- (24 June 2021 11:07:51) as /Users/ecerdeira/Desktop/ST limpio/CuisUniversity-4532.image!
+
+!InnerUserInterface methodsFor: 'initialization' stamp: 'ENC 6/24/2021 11:12:24' prior: 50925711!
+initializeWith: aCredentialValidator acceptingItemsOf: aCatalog throughtMP: aMerchantProcessor.
+
+	credentialValidator := aCredentialValidator.
+	catalog := aCatalog.
+	merchantProcessor  := aMerchantProcessor.
+	
+	carts := Dictionary new.
+	salesBooks := Dictionary new.
+	
+	lastCartId := 0.
+	lastTransactionId := 0.! !
+!InnerUserInterface methodsFor: 'signaling' stamp: 'ENC 6/24/2021 11:12:31' prior: 50925724!
+signalInvalidCartId
+
+	^ self error: self class invalidCartId.! !
+!InnerUserInterface methodsFor: 'id generation' stamp: 'ENC 6/24/2021 11:12:50' prior: 50925700!
+generateCartID
+
+	lastCartId := lastCartId + 1.
+	
+	^ lastCartId.! !
+!InnerUserInterface methodsFor: 'id generation' stamp: 'ENC 6/24/2021 11:13:01' prior: 50925705!
+generateTransactionID
+
+	lastTransactionId := lastTransactionId + 1.
+	
+	^ lastTransactionId.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:15:07'!
+updateLasTimeUsedFor: aCartID with: aTime
+		
+	(carts at: aCartID) at: 2 put: aTime.
+	
+	
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:15:55' prior: 50925691!
+listCart: aCartID at: aTime
+		
+	self assertCartID: aCartID isValidAt: aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
+	
+	^ (self cartOf: aCartID) listItems.! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:16:05' prior: 50925678!
+createCartForUser: userID withPassword: userPassword at: aTime
+
+	| cart cartID |
+	
+	credentialValidator logWith: userID and: userPassword.
+	
+	cart := Cart acceptingItemsOf: catalog.
+	
+	cartID := self generateCartID.
+	
+	carts at: cartID put: (OrderedCollection with: cart with: aTime with: userID).
+	
+	^ cartID
+	
+	! !
+!InnerUserInterface methodsFor: 'cart' stamp: 'ENC 6/24/2021 11:16:28' prior: 50925667!
+add: amountOfItems of: item toCart: aCartID at: aTime
+	
+	| cart |
+	
+	self assertCartID: aCartID isValidAt: aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
+	
+	cart := self cartOf: aCartID.
+	cart add: amountOfItems of: item.
+	
+	
+	! !
+!InnerUserInterface methodsFor: 'checkout' stamp: 'ENC 6/24/2021 11:17:11' prior: 50930179!
+checkout: aCartID at: aTime withCard: aCardNumber from: aCardOwner expiringOn: aDate
+	
+	| creditCard salesBook userID cart cashier |
+	
+	creditCard := CreditCard number: aCardNumber from: aCardOwner expiringOn: aDate.
+	
+	self assertCartID: aCartID isValidAt: aTime.
+	self updateLasTimeUsedFor: aCartID with: aTime.
+	
+	cart := self cartOf: aCartID.
+	userID := self userIdOf: aCartID.
+	
+	salesBook := salesBooks at: userID ifAbsent: [salesBooks at: userID put: OrderedCollection new].
+	
+	cashier := Cashier toCheckout: cart charging: creditCard throught: merchantProcessor on: aTime registeringOn: salesBook.
+	
+	cashier checkOut.
+	
+	^ self generateTransactionID.! !
+
+!testRun: #InnerUserInterfaceTest #test01cannotCreateACartWithInvalidCredentials stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test02createdCartWithValidCredentialsIsEmpty stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test03addingAnItemInCartIsListed stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test04cannotAddItemsToInvalidCart stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test05cannotListItemsOfInvalidCart stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test06cannotAddItemsToExpiredCart stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test07cannotListItemsOfExpiredCart stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test08cannotCheckoutACartWithInvalidCard stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test09cannotCheckoutAnInvalidCart stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test10listPurchasesOfUserWithNoSalesIsEmpty stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test11checkoutACartIsListedInPurchases stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test12cannotlistPurchasesWithInvalidCredentials stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+!testRun: #InnerUserInterfaceTest #test13checkoutMoreThanOneCartGetDifferentTransactionIDs stamp: 'ENC 6/24/2021 11:17:18'!
+PASSED!
+
+----QUIT----(24 June 2021 11:18:13) CuisUniversity-4532.image priorSource: 19157271!
