@@ -248,242 +248,192 @@ debit: anAmount from: aCreditCard
 
 !classDefinition: #InnerUserInterfaceTest category: 'TusLibros'!
 TestCase subclass: #InnerUserInterfaceTest
-	instanceVariableNames: 'credentialValidatorValid credentialValidatorInvalid testObjectsFactory debitBehavior'
+	instanceVariableNames: 'credentialValidatorValid credentialValidatorInvalid testObjectsFactory debitBehavior after30Minutes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:25:35'!
-debit: anAmount from: aCreditCard 
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:43:28'!
+test01cannotCreateACartWithInvalidCredentials
 
-	^debitBehavior value: anAmount value: aCreditCard ! !
+	| interface |
 
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:27:08'!
+	interface := testObjectsFactory interfaceForInvalidCredentialsWith: self.
+	
+	self shouldRaiseInvalidCredentialsErrorWhile: [ testObjectsFactory createCartWithInvalidCredentialsFor: interface ] ! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:16:32'!
+test02createdCartWithValidCredentialsIsEmpty
+
+	| interface cartID |
+
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	cartID := testObjectsFactory createCartWithValidCredentialsFor: interface.
+	
+	self assert: (testObjectsFactory listCart: cartID for: interface) isEmpty.! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:27:26'!
+test03addingAnItemInCartIsListed
+
+	| interface cartID |
+
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	cartID := testObjectsFactory cartWithAValidItemFor: interface.
+	
+	self assert: (testObjectsFactory listCart: cartID for: interface) size equals: 1.
+	self assert: (testObjectsFactory listCart: cartID for: interface) includes: testObjectsFactory itemSellByTheStore.
+	! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:41:28'!
+test04cannotAddItemsToInvalidCart
+
+	| interface |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	
+	self shouldRaiseInvalidCartIDErrorWhile: [ testObjectsFactory addValidItemToCart: 1 for: interface ]! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:41:41'!
+test05cannotListItemsOfInvalidCart
+
+	| interface |
+
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	
+	self shouldRaiseInvalidCartIDErrorWhile: [ testObjectsFactory listCart: 1 for: interface ]! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:42:00'!
+test06cannotAddItemsToExpiredCart
+
+	| interface cartID |
+
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	cartID := testObjectsFactory createCartWithValidCredentialsFor: interface.
+	
+	self shouldRaiseInvalidCartIDErrorWhile: [ interface add: 1 of: testObjectsFactory itemSellByTheStore toCart: cartID at: after30Minutes. ]! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:42:12'!
+test07cannotListItemsOfExpiredCart
+
+	| interface cartID |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	cartID := testObjectsFactory createCartWithValidCredentialsFor: interface.
+	
+	self shouldRaiseInvalidCartIDErrorWhile: [ testObjectsFactory listExpiredCart: cartID for: interface ]
+	! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:44:36'!
+test08cannotCheckoutACartWithInvalidCard
+
+	| interface cartID |
+
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	cartID := testObjectsFactory createCartWithValidCredentialsFor: interface.
+	
+	self shouldRaiseInvalidCreditCardErrorWhile: [ testObjectsFactory checkoutWithInvalidCard: cartID for: interface ]
+	! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:42:32'!
+test09cannotCheckoutAnInvalidCart
+
+	| interface |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	
+	self shouldRaiseInvalidCartIDErrorWhile: [ testObjectsFactory checkoutWithValidCard: 1 for: interface ]! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:30:10'!
+test10listPurchasesOfUserWithNoSalesIsEmpty
+
+	| interface listOfPurchases |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	listOfPurchases := testObjectsFactory listPurchasesOfValidUserFor: interface.
+
+	self assert: listOfPurchases first isEmpty.	
+	self assert: listOfPurchases second equals: 0.	! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:39:00'!
+test11checkoutACartIsListedInPurchases
+
+	| interface transactionID listOfPurchases |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	transactionID := testObjectsFactory checkoutCartWithValidCardfor: interface.
+	
+	self assert: transactionID > 0.
+	
+	listOfPurchases := testObjectsFactory listPurchasesOfValidUserFor: interface.
+	
+	self assert: listOfPurchases first includes: testObjectsFactory itemSellByTheStore.
+	self assert: listOfPurchases second equals: testObjectsFactory itemSellByTheStorePrice.
+	! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:43:46'!
+test12cannotlistPurchasesWithInvalidCredentials
+
+	| interface |
+	
+	interface := testObjectsFactory interfaceForInvalidCredentialsWith: self.
+
+	self shouldRaiseInvalidCredentialsErrorWhile: [ interface listPurchasesOf: testObjectsFactory invalidUser withPassword: testObjectsFactory validUserPassword ]! !
+
+!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'ENC 6/24/2021 02:38:03'!
+test13checkoutMoreThanOneCartGetDifferentTransactionIDs
+
+	| interface transactionIdA transactionIdB |
+	
+	interface := testObjectsFactory interfaceForValidCredentialsWith: self.
+	transactionIdA := testObjectsFactory checkoutCartWithValidCardfor: interface.
+	transactionIdB := testObjectsFactory checkoutCartWithValidCardfor: interface.
+	
+	self deny: transactionIdA = transactionIdB 
+	! !
+
+
+!InnerUserInterfaceTest methodsFor: 'setup' stamp: 'ENC 6/24/2021 01:49:14'!
 setUp
 	| debitedAmout debitedCreditCard | 
 	
 	credentialValidatorValid := CredentialValidatorSimulatorValidCredentials new.
 	credentialValidatorInvalid := CredentialValidatorSimulatorInvalidCredentials new.
 	testObjectsFactory := StoreTestObjectsFactory new.
+	
+	after30Minutes := testObjectsFactory dateTimeTodayAfter30Minutes.
+	
 	debitBehavior := [ :anAmount :aCreditCard | 		debitedAmout := anAmount. 		debitedCreditCard := aCreditCard ].! !
 
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:09:58'!
-test01cannotCreateACartWithInvalidCredentials
 
-	| interface userID userPassword catalog time |
+!InnerUserInterfaceTest methodsFor: 'merchant processor protocol' stamp: 'ENC 6/24/2021 01:22:31'!
+debit: anAmount from: aCreditCard 
 
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'invalidUser'.
-	userPassword := 'password'.
+	^ debitBehavior value: anAmount value: aCreditCard ! !
 
-	self 
-		should: [ interface createCartForUser: userID withPassword: userPassword at: time] 
-		raise: Error 
+
+!InnerUserInterfaceTest methodsFor: 'testing - private' stamp: 'ENC 6/24/2021 02:40:57'!
+shouldRaiseInvalidCartIDErrorWhile: aBlock
+
+	self
+		should: aBlock 
+		raise: Error
+		withMessageText: InnerUserInterface invalidCartId.! !
+
+!InnerUserInterfaceTest methodsFor: 'testing - private' stamp: 'ENC 6/24/2021 02:43:13'!
+shouldRaiseInvalidCredentialsErrorWhile: aBlock
+
+	self
+		should: aBlock 
+		raise: Error
 		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
 
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:27'!
-test02createdCartWithValidCredentialsIsEmpty
+!InnerUserInterfaceTest methodsFor: 'testing - private' stamp: 'ENC 6/24/2021 02:44:22'!
+shouldRaiseInvalidCreditCardErrorWhile: aBlock
 
-	| interface userID userPassword cartID catalog time |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: time.
-	
-	self assert: (interface listCart: cartID at: time) isEmpty.! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:33'!
-test03addingAnItemInCartIsListed
-
-	| interface userID userPassword cartID isbn catalog time |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: time.
-	
-	isbn := testObjectsFactory itemSellByTheStore.
-	
-	interface add: 1 of: isbn toCart: cartID at: time.
-	
-	self assert: ((interface listCart: cartID at: time) size) equals: 1.
-	self assert: (interface listCart: cartID at: time) includes: isbn.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:43'!
-test04cannotAddItemsToInvalidCart
-
-	| interface catalog time |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	self should: [interface add: 1 of: 'isbn' toCart: 1 at: time]
-	 raise: Error
-	withMessageText: InnerUserInterface invalidCartId.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:47'!
-test05cannotListItemsOfInvalidCart
-
-	| interface catalog time |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	self should: [interface listCart: 1 at: time]
-	 raise: Error
-	withMessageText: InnerUserInterface invalidCartId.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:52'!
-test06cannotAddItemsToExpiredCart
-
-	| interface catalog time cartID userID userPassword creationTime isbn |
-
-	catalog := testObjectsFactory defaultCatalog.
-	creationTime := testObjectsFactory dateTimeToday.
-	time := testObjectsFactory dateTimeTodayAfter30Minutes .
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: creationTime.
-	
-	isbn := testObjectsFactory itemSellByTheStore.
-	
-	self should: [interface add: 1 of: isbn toCart: cartID at: time.]
-	 raise: Error
-	withMessageText: InnerUserInterface invalidCartId.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:55'!
-test07cannotListItemsOfExpiredCart
-
-	| interface catalog time cartID userID userPassword creationTime |
-
-	catalog := testObjectsFactory defaultCatalog.
-	creationTime := testObjectsFactory dateTimeToday.
-	time := testObjectsFactory dateTimeTodayAfter30Minutes .
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: creationTime.
-	
-	self should: [interface listCart: cartID at: time]
-	 raise: Error
-	withMessageText: InnerUserInterface invalidCartId.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:48:59'!
-test08cannotCheckoutACartWithInvalidCard
-
-	| interface catalog time cartID userID userPassword |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: time.
-	
-	self should: [interface checkout: cartID at: time withCard: 0 from: '' expiringOn: '']
-	 raise: Error
-	withMessageText: CreditCard invalidCreditCard.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:49:04'!
-test09cannotCheckoutAnInvalidCart
-
-	| interface catalog time|
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	
-	self should: [ interface checkout: 1 at: time withCard: 1234567812345678 from: 'donpepegrillo' expiringOn: '072021']
-	 raise: Error
-	withMessageText: InnerUserInterface invalidCartId.! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:38:06'!
-test10listPurchasesOfUserWithNoSalesIsEmpty
-
-	| interface catalog userID userPassword  |
-
-	catalog := testObjectsFactory defaultCatalog.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-	
-
-	self assert: (interface listPurchasesOf: userID withPassword: userPassword) equals: (OrderedCollection with: (OrderedCollection new) with: 0).	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:54:35'!
-test11checkoutACartIsListedInPurchases
-
-	| interface catalog time cartID isbn userID userPassword expectedList transactionID |
-
-	catalog := testObjectsFactory defaultCatalog.
-	time := testObjectsFactory dateTimeToday.
-	
-	interface := InnerUserInterface with: credentialValidatorValid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'validUser'.
-	userPassword := 'validPassword'.
-
-	cartID := interface createCartForUser: userID withPassword: userPassword at: time.
-	
-	isbn := testObjectsFactory itemSellByTheStore.
-	
-	interface add: 1 of: isbn toCart: cartID at: time.
-	expectedList := OrderedCollection with: (OrderedCollection with: isbn) with: testObjectsFactory itemSellByTheStorePrice.
-	transactionID := 1.
-	
-	self assert: (interface checkout: cartID at: time withCard: 1234567812345678 from: 'donpepegrillo' expiringOn: '072021') equals: transactionID.
-	self assert: (interface listPurchasesOf: userID withPassword: userPassword) equals: expectedList.
-	! !
-
-!InnerUserInterfaceTest methodsFor: 'testing' stamp: 'MS 6/23/2021 23:44:43'!
-test12cannotlistPurchasesWithInvalidCredentials
-
-	| interface userID userPassword catalog |
-
-	catalog := testObjectsFactory defaultCatalog.
-	
-	interface := InnerUserInterface with: credentialValidatorInvalid acceptingItemsOf: catalog throughtMP: self.
-	userID := 'invalidUser'.
-	userPassword := 'password'.
-
-	self 
-		should: [interface listPurchasesOf: userID withPassword: userPassword] 
-		raise: Error 
-		withMessageText: CredentialValidatorSimulator errorInvalidUsernameOrPassword.! !
+	self
+		should: aBlock 
+		raise: Error
+		withMessageText: CreditCard invalidCreditCard.! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -722,10 +672,10 @@ Object subclass: #CreditCard
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CreditCard methodsFor: 'testing' stamp: 'HernanWilkinson 6/17/2013 18:39'!
+!CreditCard methodsFor: 'testing' stamp: 'ENC 6/24/2021 01:21:32'!
 isExpiredOn: aDate 
 	
-	^expiration start < (Month month: aDate monthIndex year: aDate yearNumber) start ! !
+	^ expiration start < (Month month: aDate monthIndex year: aDate yearNumber) start ! !
 
 
 !CreditCard methodsFor: 'signaling' stamp: 'MS 6/23/2021 00:49:18'!
@@ -734,14 +684,8 @@ signalInvalidCreditCard
 	^ self error: self class invalidCreditCard.! !
 
 
-!CreditCard methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:38'!
-initializeExpiringOn: aMonth 
-	
-	expiration := aMonth ! !
-
-!CreditCard methodsFor: 'initialization' stamp: 'MS 6/23/2021 01:18:41'!
+!CreditCard methodsFor: 'initialization' stamp: 'ENC 6/24/2021 01:20:38'!
 initializeWith: aCardNumber from: anOwnerName expiringOn: anExpirationDate
-.
 
 	(anOwnerName withBlanksTrimmed isEmpty) ifTrue: [ self signalInvalidCreditCard ].
 	((aCardNumber numberOfDigitsInBase: 10) = 16) ifFalse: [ self signalInvalidCreditCard ].
@@ -763,11 +707,6 @@ invalidCreditCard
 	^ 'No se puede comprar con una tarjeta inválida.'! !
 
 
-!CreditCard class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/17/2013 18:38'!
-expiringOn: aMonth 
-	
-	^self new initializeExpiringOn: aMonth! !
-
 !CreditCard class methodsFor: 'instance creation' stamp: 'MS 6/23/2021 01:03:16'!
 number: aCardNumber from: anOwnerName expiringOn: anExpirationDate 
 	
@@ -781,7 +720,7 @@ Object subclass: #InnerUserInterface
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!InnerUserInterface methodsFor: 'checkout' stamp: 'MS 6/23/2021 23:48:12'!
+!InnerUserInterface methodsFor: 'checkout' stamp: 'ENC 6/24/2021 02:45:05'!
 checkout: aCartID at: aTime withCard: aCardNumber from: aCardOwner expiringOn: aDate
 	
 	| creditCard salesBook userID cart cashier cartTime |
@@ -793,7 +732,7 @@ checkout: aCartID at: aTime withCard: aCardNumber from: aCardOwner expiringOn: a
 	cartTime := self lastTimeUsedOf: aCartID.
 	cartTime := aTime.
 	cart := self cartOf: aCartID.
-	userID := self UserIDOf: aCartID.
+	userID := self userIdOf: aCartID.
 	
 	salesBook := salesBooks at: userID ifAbsent: [salesBooks at: userID put: OrderedCollection new].
 	
@@ -818,17 +757,20 @@ listPurchasesOf: anUserID withPassword: anUserPassword
 	^ OrderedCollection with: purchases with: total.! !
 
 
-!InnerUserInterface methodsFor: 'private' stamp: 'MS 6/23/2021 23:13:40'!
-UserIDOf: aCartID
-	^ (carts at: aCartID) at: 3.! !
-
-!InnerUserInterface methodsFor: 'private' stamp: 'MS 6/23/2021 23:14:58'!
+!InnerUserInterface methodsFor: 'private' stamp: 'ENC 6/24/2021 02:45:23'!
 cartOf: aCartID
+
 	^ (carts at: aCartID) at: 1.! !
 
-!InnerUserInterface methodsFor: 'private' stamp: 'MS 6/23/2021 23:14:54'!
+!InnerUserInterface methodsFor: 'private' stamp: 'ENC 6/24/2021 02:45:16'!
 lastTimeUsedOf: aCartID
-	^(carts at: aCartID) at: 2.! !
+
+	^ (carts at: aCartID) at: 2.! !
+
+!InnerUserInterface methodsFor: 'private' stamp: 'ENC 6/24/2021 02:45:08'!
+userIdOf: aCartID
+
+	^ (carts at: aCartID) at: 3.! !
 
 
 !InnerUserInterface methodsFor: 'cart' stamp: 'MS 6/23/2021 23:02:57'!
@@ -942,8 +884,9 @@ Object subclass: #Sale
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Sale methodsFor: 'purchase' stamp: 'MS 6/23/2021 02:10:42'!
+!Sale methodsFor: 'purchase' stamp: 'ENC 6/24/2021 01:19:02'!
 purchase
+
 	^ items! !
 
 
@@ -953,11 +896,11 @@ total
 	^ total! !
 
 
-!Sale methodsFor: 'initialization' stamp: 'MS 6/23/2021 02:12:16'!
+!Sale methodsFor: 'initialization' stamp: 'ENC 6/24/2021 01:19:11'!
 initializeTotal: aTotal for: aListOfItems
 
-	total := aTotal .
-	items := aListOfItems .! !
+	total := aTotal.
+	items := aListOfItems.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -965,11 +908,11 @@ initializeTotal: aTotal for: aListOfItems
 Sale class
 	instanceVariableNames: ''!
 
-!Sale class methodsFor: 'instance creation' stamp: 'MS 6/23/2021 02:11:48'!
+!Sale class methodsFor: 'instance creation' stamp: 'ENC 6/24/2021 01:20:18'!
 of: aTotal for: aListOfItems
 
 	"should assert total is not negative or 0!!"
-	^self new initializeTotal: aTotal for: aListOfItems.! !
+	^ self new initializeTotal: aTotal for: aListOfItems.! !
 
 
 !classDefinition: #StoreTestObjectsFactory category: 'TusLibros'!
@@ -979,26 +922,26 @@ Object subclass: #StoreTestObjectsFactory
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'ENC 6/24/2021 01:19:36'!
 itemNotSellByTheStore
 	
-	^'invalidBook'! !
+	^ 'invalidBook'! !
 
 !StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
 itemSellByTheStore
 	
 	^ 'validBook'! !
 
-!StoreTestObjectsFactory methodsFor: 'items' stamp: 'HernanWilkinson 6/17/2013 18:08'!
+!StoreTestObjectsFactory methodsFor: 'items' stamp: 'ENC 6/24/2021 01:19:31'!
 itemSellByTheStorePrice
 	
-	^10! !
+	^ 10! !
 
 
-!StoreTestObjectsFactory methodsFor: 'cart' stamp: 'HernanWilkinson 6/17/2013 18:08'!
+!StoreTestObjectsFactory methodsFor: 'cart' stamp: 'ENC 6/24/2021 01:19:26'!
 createCart
 	
-	^Cart acceptingItemsOf: self defaultCatalog! !
+	^ Cart acceptingItemsOf: self defaultCatalog! !
 
 !StoreTestObjectsFactory methodsFor: 'cart' stamp: 'HernanWilkinson 6/17/2013 18:08'!
 defaultCatalog
@@ -1008,15 +951,20 @@ defaultCatalog
 		yourself ! !
 
 
-!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'HernanWilkinson 6/17/2013 18:37'!
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'ENC 6/24/2021 00:44:01'!
+createCardExpiredOn: aMonthInString
+
+	^ CreditCard number: 1234567812345678 from: 'anOwner' expiringOn: aMonthInString ! !
+
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'ENC 6/24/2021 00:43:30'!
 expiredCreditCard
 	
-	^CreditCard expiringOn: (Month month: today monthIndex year: today yearNumber - 1)! !
+	^ self createCardExpiredOn: self todayExpiredMonthAsString.! !
 
-!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'HernanWilkinson 6/17/2013 18:36'!
+!StoreTestObjectsFactory methodsFor: 'credit card' stamp: 'ENC 6/24/2021 00:43:45'!
 notExpiredCreditCard
 	
-	^CreditCard expiringOn: (Month month: today monthIndex year: today yearNumber + 1)! !
+	^ self createCardExpiredOn: self todayMonthAsString.! !
 
 
 !StoreTestObjectsFactory methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:37'!
@@ -1025,17 +973,161 @@ initialize
 	today := DateAndTime now! !
 
 
-!StoreTestObjectsFactory methodsFor: 'date' stamp: 'MS 6/22/2021 23:39:56'!
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:15:53'!
+dateTimeAtMinute: aMinute
+	
+	^ DateAndTime date: today time: (Time hour: 19 minute: aMinute second: 00).! !
+
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:16:07'!
 dateTimeToday
 	
-	^ DateAndTime date: today time: (Time hour: 19 minute: 00 second: 00).! !
+	^ self dateTimeAtMinute: 0.! !
 
-!StoreTestObjectsFactory methodsFor: 'date' stamp: 'MS 6/22/2021 23:41:04'!
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:16:17'!
 dateTimeTodayAfter30Minutes
 	
-	^ DateAndTime date: today time: (Time hour: 19 minute: 31 second: 00).! !
+	^ self dateTimeAtMinute: 31.! !
+
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:17:32'!
+monthAsStringFor: aYear
+	
+	| monthString yearString |
+	
+	monthString := today monthIndex asString.
+	yearString := aYear asString.
+	
+	(monthString size = 1) ifTrue: [ monthString := '0', monthString ].
+	
+	^ monthString, yearString! !
 
 !StoreTestObjectsFactory methodsFor: 'date' stamp: 'HernanWilkinson 6/17/2013 18:37'!
 today
 	
 	^ today! !
+
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:17:58'!
+todayExpiredMonthAsString
+	
+	^ self monthAsStringFor: today yearNumber - 1.! !
+
+!StoreTestObjectsFactory methodsFor: 'date' stamp: 'ENC 6/24/2021 01:18:19'!
+todayMonthAsString
+	
+	^ self monthAsStringFor: today yearNumber ! !
+
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:42:01'!
+addValidItemToCart: aCartId for: anInnerInterface
+
+	^ anInnerInterface 
+		add: 1 of: self itemSellByTheStore 
+		toCart: aCartId 
+		at: self dateTimeToday.! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:10:25'!
+cartWithAValidItemFor: anInnerInterface
+
+	| cartID |
+	
+	cartID := self createCartWithValidCredentialsFor: anInnerInterface.
+	self addValidItemToCart: cartID for: anInnerInterface.
+
+	^ cartID 
+	! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:35:06'!
+checkoutCartWithValidCardfor: anInnerInterface
+
+	| cartID |
+
+	cartID := self cartWithAValidItemFor: anInnerInterface.
+	
+	^ self checkoutWithValidCard: cartID for: anInnerInterface.! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:21:09'!
+checkoutWithInvalidCard: aCartID for: anInnerInterface
+
+	^ anInnerInterface 
+		checkout: aCartID at: self dateTimeToday 
+		withCard: 0 from: '' expiringOn: '' ! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:24:39'!
+checkoutWithValidCard: aCartID for: anInnerInterface
+
+	^ anInnerInterface 
+		checkout: aCartID at: self dateTimeToday 
+		withCard: 1234567812345678 from: 'anOwner' expiringOn: self todayMonthAsString ! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:36:52'!
+createCartWithInvalidCredentialsFor: anInnerInterface
+
+	^ anInnerInterface 
+		createCartForUser: self invalidUser 
+		withPassword: self validUserPassword 
+		at: self dateTimeToday! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:37:16'!
+createCartWithValidCredentialsFor: anInnerInterface
+
+	^ anInnerInterface 
+		createCartForUser: self validUser 
+		withPassword: self validUserPassword 
+		at: self dateTimeToday! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:33:45'!
+credentialValidatorForInvalidCredentials
+
+	^ CredentialValidatorSimulatorInvalidCredentials new! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:33:53'!
+credentialValidatorForValidCredentials
+
+	^ CredentialValidatorSimulatorValidCredentials new! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:37:39'!
+interfaceForInvalidCredentialsWith: aMerchantProcessor
+
+	^ InnerUserInterface 
+		with: self credentialValidatorForInvalidCredentials 
+		acceptingItemsOf: self defaultCatalog 
+		throughtMP: aMerchantProcessor .! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:37:49'!
+interfaceForValidCredentialsWith: aMerchantProcessor
+
+	^ InnerUserInterface 
+		with: self credentialValidatorForValidCredentials 
+		acceptingItemsOf: self defaultCatalog 
+		throughtMP: aMerchantProcessor .! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:25:21'!
+invalidUser
+
+	^ 'invalidUser'! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:15:28'!
+listCart: aCartID for: anInnerInterface
+
+	^ anInnerInterface listCart: aCartID at: self dateTimeToday! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:16:00'!
+listExpiredCart: aCartID for: anInnerInterface
+
+	^ anInnerInterface listCart: aCartID at: self dateTimeTodayAfter30Minutes ! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 02:04:48'!
+listPurchasesOfValidUserFor: anInnerInterface
+
+	^ anInnerInterface 
+		listPurchasesOf: self validUser 
+		withPassword: self validUserPassword ! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:25:17'!
+validUser
+
+	^ 'validUser'! !
+
+!StoreTestObjectsFactory methodsFor: 'inner interface' stamp: 'ENC 6/24/2021 01:25:32'!
+validUserPassword
+
+	^ 'password'! !
