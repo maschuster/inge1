@@ -9932,3 +9932,5 @@ initializeWithPort: aPortNumber
 	self addService: '/listPurchases' action: self listPurchasesHandler.
 	self addService: '/removeFromCart' action: self removeFromCartHandler.
 	! !
+
+----QUIT----(8 July 2021 16:31:53) CuisUniversity-4532.image priorSource: 21701101!
